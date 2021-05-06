@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+import mapMutations from "vuex/dist/vuex.mjs";
 export default {
   name: 'login',
   data() {
@@ -54,9 +56,25 @@ export default {
     }
   },
   methods:{
+    ...mapMutations(['changeLogin']),
     submit(){
-      console.log(this.ruleForm.name);
-      console.log(this.ruleForm.password);
+      const host = "localhost:8181/"
+      let _this = this;
+      axios.post(
+          host + 'login' ,
+          _this.ruleForm,
+      ).then(
+          res =>{
+            console.log(res.data);
+            _this.userToken = 'Bearer ' + res.data.data.body.token;
+            _this.changeLogin({Authorization: _this.userToken});
+            _this.$router.push('/');
+            alert("登录成功");
+          }
+      ).catch( err =>{
+        alert("信息错误或用户名已经存在");
+        console.log(error);
+      })
     },
     clear(){
       this.ruleForm.name = "";
