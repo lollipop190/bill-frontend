@@ -9,12 +9,33 @@
     </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
     name:'infoPanel',
-    mounted() {
-    //各项钱款数据
-
-      },
+    // mounted() {
+    // //各项钱款数据
+    //   let _this = this;
+    //   axios.get(
+    //       '/' ,// /util/api.js中添加反向代理
+    //       {
+    //         headers:{
+    //           // "Access-Control-Allow-Origin": "*"
+    //           "token": _this.$store.Authorization
+    //         }
+    //       }
+    //   ).then(
+    //       res =>{
+    //         _this.userToken = 'Bearer ' + res.data.data.body.token;
+    //         _this.changeLogin({Authorization: _this.userToken});
+    //         _this.$router.push('/');
+    //         alert("登录成功");
+    //       }
+    //   ).catch( err =>{
+    //     alert("信息错误或用户名已经存在");
+    //     console.log(error);
+    //   })
+    //   },
   data(){
         return{
           panel_list:[

@@ -3,11 +3,11 @@
 
   <div class="textContainer">
     登录
-    <p style="font-size:20px">（无账号请点击注册）</p>
+    <p style="font-size:20px">（无账号自动注册）</p>
   </div>
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="20%" class="demo-ruleForm form">
-  <el-form-item label="用户名" prop="name">
-    <el-input class="input_item" v-model="ruleForm.name"></el-input>
+  <el-form-item label="用户名" prop="username">
+    <el-input class="input_item" v-model="ruleForm.username"></el-input>
   </el-form-item>
   <el-form-item label="密码" prop="password">
     <el-input class="input_item" v-model="ruleForm.password"></el-input>
@@ -24,17 +24,17 @@
 
 <script>
 import axios from 'axios'
-import mapMutations from "vuex/dist/vuex.mjs";
+import { ElMessage } from "element-plus/es";
 export default {
   name: 'login',
   data() {
     return {
       ruleForm: {
-          name: '',
+          username: '',
           password: '',
         },
         rules: {
-          name: [
+          username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
             { max: 10, message: '用户名过长，大于10个字符', trigger: 'blur' }
           ],
@@ -49,35 +49,40 @@ export default {
   },
   computed:{
     is_satisfied(){
-        return (this.ruleForm.name !== "") && (this.ruleForm.password !== "");
+        return (this.ruleForm.username !== "") && (this.ruleForm.password !== "");
     },
     not_empty(){
-      return this.ruleForm.name === "" && this.ruleForm.password === "";
+      return this.ruleForm.username === "" && this.ruleForm.password === "";
     }
   },
   methods:{
-    ...mapMutations(['changeLogin']),
     submit(){
-      const host = "localhost:8181/"
       let _this = this;
       axios.post(
-          host + 'login' ,
+          '/loginOrSign' ,// /util/api.js中添加反向代理
           _this.ruleForm,
+          {
+            headers:{
+              // "Access-Control-Allow-Origin": "*"
+              "token": localStorage.getItem('Authorization')
+            }
+          }
       ).then(
           res =>{
-            console.log(res.data);
-            _this.userToken = 'Bearer ' + res.data.data.body.token;
-            _this.changeLogin({Authorization: _this.userToken});
+            localStorage.setItem('Authorization', res.data.token);
+            ElMessage.success({
+              message: '登录成功：）',
+              type: 'success'
+            });
             _this.$router.push('/');
-            alert("登录成功");
+
           }
       ).catch( err =>{
-        alert("信息错误或用户名已经存在");
-        console.log(error);
+        console.log(err);
       })
     },
     clear(){
-      this.ruleForm.name = "";
+      this.ruleForm.username = "";
       this.ruleForm.password = "";
     }
   }

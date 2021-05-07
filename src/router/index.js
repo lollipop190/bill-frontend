@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import moneyCounter from "../views/moneyCounter";
+import { ElMessage } from "element-plus/es";
 
 const routes = [
   {
@@ -30,13 +31,26 @@ const router = createRouter({
 })
 
 
+
 router.beforeEach(
   (to, from, next) =>{
-    if(to.path === '/login')
-      next();
+    if(to.path === '/login' ){
+      if (localStorage.getItem('Authorization') === null)
+        next();
+      else
+      {
+        ElMessage({
+          message: '已经登录，请勿重复登录！',
+          type: 'warning'
+        });
+        next('/');
+      }
+
+    }
+
     else{
       let token = localStorage.getItem('Authorization');
-      if(token === 'null' || token === ''){
+      if(token === null){
         next('/login');
       }else{
         next();
