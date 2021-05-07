@@ -40,6 +40,7 @@
 
 <script>
 import {ElMessage} from "element-plus";
+import {postRes} from "../util/axiosAPI";
 export default {
   name: "inputPanel",
   mounted() {
@@ -51,12 +52,9 @@ export default {
   data(){
     return{
       tags:[
-          '吃饭',
-          '地铁',
-          '健身',
-          '日常',
-          'ktv',
-          '唱歌','跳舞','买书',
+          '餐饮',
+          '交通',
+          '学习','医疗',
       ],
       title:"",
       newTag:"",
@@ -127,7 +125,32 @@ export default {
       this.tagSelectedArray[index] = (this.tagSelectedArray[index] === 0) ? 1: 0;
     },
     upload(){
-
+      const _this = this;
+      let tagSelected = [];
+      for (let i = 0; i < _this.tags.length; i++) {
+        if(_this.tagSelectedArray[i])
+          tagSelected.push(_this.tags[i])
+      }
+        postRes(
+            '/newBill',
+            {
+              title: _this.title,
+              amount: _this.items[0],
+              tagSelected: tagSelected
+            }, res =>{
+              if(res.data.code === 200){
+                _this.$message({
+                  message:'添加成功！',
+                  type: 'success'
+                })
+                _this.title = '';
+                _this.items[0] = '0';
+                for (let i = 0; i < _this.tagSelectedArray.length; i++) {
+                  _this.tagSelectedArray[i] = 0;
+                }
+              }
+            }
+        );
     }
   },
   computed:{
@@ -199,6 +222,7 @@ input::placeholder{
   grid-column-start: 1;
   grid-column-end: 3;
   text-align: right;
+  padding: 0;
 }
 .item{
   border: 2px solid black;
@@ -206,7 +230,7 @@ input::placeholder{
   border-radius: 10px;
   font-size: 50px;
   font-family: "Space Mono",monospace;
-  overflow: scroll;
+  overflow: auto;
 }
 
 

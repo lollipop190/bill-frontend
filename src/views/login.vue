@@ -24,6 +24,7 @@
 
 <script>
 import axios from 'axios'
+import {postRes} from "../util/axiosAPI";
 import { ElMessage } from "element-plus/es";
 export default {
   name: 'login',
@@ -58,27 +59,20 @@ export default {
   methods:{
     submit(){
       let _this = this;
-      axios.post(
-          '/loginOrSign' ,// /util/api.js中添加反向代理
-          _this.ruleForm,
-          {
-            headers:{
-              // "Access-Control-Allow-Origin": "*"
-              "token": localStorage.getItem('Authorization')
-            }
-          }
-      ).then(
-          res =>{
-            localStorage.setItem('Authorization', res.data.token);
-            ElMessage.success({
-              message: '登录成功：）',
-              type: 'success'
-            });
-            _this.$router.push('/');
-
-          }
-      ).catch( err =>{
-        console.log(err);
+      postRes('/loginOrSign',_this.ruleForm,  res =>{
+        if (res.data.msg === 'wrong'){
+          _this.$message({
+            message:'密码错误或者用户名已存在！',
+            type:'error'
+          })
+          return
+        }
+        localStorage.setItem('Authorization', res.data.token);
+        ElMessage.success({
+          message: '登录成功：）',
+          type: 'success'
+        });
+        _this.$router.push('/');
       })
     },
     clear(){

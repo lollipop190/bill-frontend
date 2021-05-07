@@ -27,8 +27,18 @@
 </template>
 
 <script>
+import {getRes} from "../util/axiosAPI";
+
 export default {
   name: "moneyList",
+  mounted() {
+    getRes(
+        '/allBills',
+        res =>{
+          console.log(res);
+        }
+    )
+  },
   data(){
     return{
       list:[

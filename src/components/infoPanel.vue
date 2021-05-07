@@ -20,7 +20,6 @@ export default {
     //       '/' ,// /util/api.js中添加反向代理
     //       {
     //         headers:{
-    //           // "Access-Control-Allow-Origin": "*"
     //           "token": _this.$store.Authorization
     //         }
     //       }
