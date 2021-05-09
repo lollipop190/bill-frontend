@@ -74,7 +74,7 @@ export default {
 
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
   display: grid;
-  grid-template-columns: 80% 20%;
+  grid-template-columns: 77% 23%;
   padding: 15px;/*字和边框的距离*/
 }
 .title{
@@ -82,10 +82,11 @@ export default {
   font-size: 16px;
 }
 .amount{
-  text-align: center;
   color: #40E0D0;
   font-size: 25px;
-  padding: 10px;
+  padding: 5px;
+
+  font-weight: bolder;
 }
 .tag{
   margin-left: 5px;

@@ -21,7 +21,7 @@ export default {
 
           for (let i = 0; i < res.data.length; i++) {
 
-            _this.panel_list[i].money = res.data[i];
+            _this.panel_list[i].money = res.data[i].toFixed(2);
 
           }
         }

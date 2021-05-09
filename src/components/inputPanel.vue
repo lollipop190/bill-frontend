@@ -85,6 +85,17 @@ export default {
   },
   methods:{
     handleNumClick(index){
+      if(this.items[0].length > this.items[0].indexOf('.') + 2){
+         ElMessage.warning({
+          message: "最多输入两位小数：）",
+          type: "warning",
+          duration: 1000,
+          center: true,
+          offset: 10,
+        });
+
+        return;
+      }
       switch (index) {
         case 0:
           break;
