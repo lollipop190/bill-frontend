@@ -10,7 +10,7 @@
     <el-input class="input_item" v-model="ruleForm.username"></el-input>
   </el-form-item>
   <el-form-item label="密码" prop="password">
-    <el-input class="input_item" v-model="ruleForm.password"></el-input>
+    <el-input class="input_item" v-model="ruleForm.password" type="password"></el-input>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="submit" :disabled="!is_satisfied">创建/登录</el-button>

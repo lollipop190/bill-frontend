@@ -1,5 +1,8 @@
 <template>
 <div class="container">
+
+
+
   <router-link to="/">
     <el-button type="" icon="el-icon-arrow-left" class="back">返回</el-button>
 
@@ -12,7 +15,7 @@
       {{item.title}}
     </div>
     <div class="timeAndTag">
-      <span>{{item.time}}</span>
+      <span>{{item.date}}</span>
       <span v-for="tag in item.tags" class="tag">{{tag}}</span>
     </div>
 
@@ -32,40 +35,18 @@ import {getRes} from "../util/axiosAPI";
 export default {
   name: "moneyList",
   mounted() {
+    const _this = this;
     getRes(
         '/allBills',
         res =>{
-          console.log(res);
+          _this.list = res.data;
         }
     )
   },
   data(){
     return{
       list:[
-        {
-          title:'吃饭',
-          time:'2021-05-05 15:30:00',
-          tags:['吃饭','日常'],
-          amount: 10,
-        },
-        {
-          title:'吃饭',
-          time:'2021-05-05 15:30:00',
-          tags:['吃饭','日常'],
-          amount: 10,
-        },
-        {
-          title:'吃饭',
-          time:'2021-05-05 15:30:00',
-          tags:['吃饭','日常'],
-          amount: 10,
-        },
-        {
-          title:'吃饭',
-          time:'2021-05-05 15:30:00',
-          tags:['吃饭','日常'],
-          amount: 10,
-        }
+
       ]
     }
   },
@@ -84,20 +65,21 @@ export default {
 
 }
 .item{
-  margin-left: 5%;
-  margin-top: 20px;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 8px;
 
-  border-radius: 20px;
+  border-radius: 30px;
   background-color: #FFF;
 
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
   display: grid;
   grid-template-columns: 80% 20%;
-  padding: 10px;/*字和边框的距离*/
+  padding: 15px;/*字和边框的距离*/
 }
 .title{
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
 }
 .amount{
   text-align: center;
@@ -107,5 +89,8 @@ export default {
 }
 .tag{
   margin-left: 5px;
+}
+.timeAndTag{
+  margin-top: 5px;
 }
 </style>

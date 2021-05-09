@@ -4,7 +4,9 @@
       <el-button type="" icon="el-icon-arrow-left" class="back">返回</el-button>
 
     </router-link>
-
+    <router-link to="/login" @click="logout" class="logout">
+    <el-button type="" icon="el-icon-arrow-right" class="logout">登出</el-button>
+    </router-link>
     <el-card class="box-card helpInfo">
       <template #header>
         <div class="card-header">
@@ -28,7 +30,12 @@
 
 <script>
 export default {
-  name: "userPage"
+  name: "userPage",
+  methods:{
+    logout(){
+      localStorage.clear("token");
+    }
+  }
 }
 </script>
 
@@ -36,6 +43,11 @@ export default {
 .back{
   border-radius: 20px;
   margin-left: 10px;
+}
+.logout{
+  float: right;
+  margin-right: 10px;
+  border-radius: 20px;
 }
 .helpInfo{
   width: 90%;

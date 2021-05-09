@@ -40,22 +40,43 @@
 
 <script>
 import {ElMessage} from "element-plus";
-import {postRes} from "../util/axiosAPI";
+import {getRes, postRes} from "../util/axiosAPI";
 export default {
   name: "inputPanel",
   mounted() {
     //标签数据
-    for (let i = 0; i <this.tags.length ; i++) {
-      this.tagSelectedArray.push(0);//初始化记录tag是否被选中的数组
+    let _this = this;
+    for (let i = 0; i < this.tags.length; i++) {
+        _this.tagSelectedArray.push(0);
     }
+
+    getRes(
+        '/allTags',
+        res =>{
+          let tags = res.data;
+          console.log();
+          for (let i = 0; i < tags.length; i++) {
+            if (!_this.tags.includes(tags[i]['name'])){
+              _this.tags.push(tags[i]['name']);
+              _this.tagSelectedArray.push(0);
+            }
+          }
+
+        }
+    )
+    // for (let i = 0; i <this.tags.length ; i++) {
+    //   this.tagSelectedArray.push(0);//初始化记录tag是否被选中的数组
+    // }
   },
   data(){
     return{
-      tags:[
+      tags:
+          [
           '餐饮',
           '交通',
-          '学习','医疗',
-      ],
+          '学习','医疗'
+      ]
+  ,
       title:"",
       newTag:"",
       tagSelectedArray:[],
@@ -126,6 +147,7 @@ export default {
     },
     upload(){
       const _this = this;
+
       let tagSelected = [];
       for (let i = 0; i < _this.tags.length; i++) {
         if(_this.tagSelectedArray[i])
@@ -139,18 +161,18 @@ export default {
               tagSelected: tagSelected
             }, res =>{
               if(res.data.code === 200){
+
                 _this.$message({
                   message:'添加成功！',
                   type: 'success'
                 })
-                _this.title = '';
-                _this.items[0] = '0';
-                for (let i = 0; i < _this.tagSelectedArray.length; i++) {
-                  _this.tagSelectedArray[i] = 0;
-                }
+                setTimeout(()=>{
+                  window.location.reload();
+                }, 1000);
               }
             }
         );
+
     }
   },
   computed:{
@@ -261,4 +283,8 @@ input::placeholder{
   opacity: .3;
   transition: 0s;
 }
+
+
+
+
 </style>

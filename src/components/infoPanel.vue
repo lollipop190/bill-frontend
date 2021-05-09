@@ -9,58 +9,53 @@
     </div>
 </template>
 <script>
-import axios from "axios";
+import {getRes} from "../util/axiosAPI";
 
 export default {
     name:'infoPanel',
-    // mounted() {
-    // //各项钱款数据
-    //   let _this = this;
-    //   axios.get(
-    //       '/' ,// /util/api.js中添加反向代理
-    //       {
-    //         headers:{
-    //           "token": _this.$store.Authorization
-    //         }
-    //       }
-    //   ).then(
-    //       res =>{
-    //         _this.userToken = 'Bearer ' + res.data.data.body.token;
-    //         _this.changeLogin({Authorization: _this.userToken});
-    //         _this.$router.push('/');
-    //         alert("登录成功");
-    //       }
-    //   ).catch( err =>{
-    //     alert("信息错误或用户名已经存在");
-    //     console.log(error);
-    //   })
-    //   },
+  mounted() {
+      const _this = this;
+    getRes(
+        '/allDetailBillAmount',
+        res =>{
+
+          for (let i = 0; i < res.data.length; i++) {
+
+            _this.panel_list[i].money = res.data[i];
+
+          }
+        }
+    )
+  },
+
+
   data(){
         return{
           panel_list:[
             {
               title:'今天',
-              money:'0.00',
+              money: 0,
             },
             {
               title:'昨天',
-              money:'1.23'
+              money: 0
             },
             {
               title:'本周',
-              money:'4.56'
+              money: 0
             },
             {
               title:'上周',
-              money:'7.89'
+              money: 0
             },
             {
+
               title:'本月',
-              money:'0.00'
+              money: 0
             },
             {
               title:'上月',
-              money:'0.00'
+              money: 0
             },
           ]
         }

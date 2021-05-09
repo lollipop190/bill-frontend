@@ -28,7 +28,7 @@ export function getRes(url, success){
     }).then(
         resp => success(resp)
     ).catch(
-        err => console.log(err)
+        // err => console.log(err)
     )
 }
 
