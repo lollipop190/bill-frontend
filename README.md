@@ -1,19 +1,24 @@
-# frontend
+# bill-frontend
 
-## Project setup
-```
-npm install
-```
+# version 1.0
+### 实现基本功能：
+- 提交账单
+- 查询全部账单
+- 按特定时间查询账单
+- 标签功能
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# version 1.1
+- 修复了因浮点数无法精确表示而带来的数字过大问题
+- 禁止输入超过两位的小数
+- 修复list页面账单金额显示不全的问题
 
-### Compiles and minifies for production
-```
-npm run build
-```
+# TODO
+[] 删除订单功能
+[] 密码隐藏与显示
+[] 数据分析
+如：
+- 本月各部分占比（上月）
+- 各个月份的占比情况
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[] 登录后的帮助信息的提示，或者是登录之前
+[] 账单的tag显示 - 需要配合后端数据库查询
