@@ -64,9 +64,7 @@ export default {
 
         }
     )
-    // for (let i = 0; i <this.tags.length ; i++) {
-    //   this.tagSelectedArray.push(0);//初始化记录tag是否被选中的数组
-    // }
+    
   },
   data(){
     return{
@@ -85,7 +83,7 @@ export default {
   },
   methods:{
     handleNumClick(index){
-      if(this.items[0].length > this.items[0].indexOf('.') + 2){
+      if(this.items[0].indexOf('.') !== -1 &&(this.items[0].length > this.items[0].indexOf('.') + 2) && index !==11 && index !== 1){
          ElMessage.warning({
           message: "最多输入两位小数：）",
           type: "warning",

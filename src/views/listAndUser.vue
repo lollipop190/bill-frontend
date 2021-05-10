@@ -8,9 +8,8 @@
 
   </router-link>
 
-  <div v-for="(item, index) in list" class="item">
+  <div v-for="(item, index) in list" class="item" @click="deleteBill(item,index)">
     <div>
-
     <div class="title">
       {{item.title}}
     </div>
@@ -18,7 +17,6 @@
       <span>{{item.date}}</span>
       <span v-for="tag in item.tags" class="tag">{{tag}}</span>
     </div>
-
     </div>
 
 
@@ -30,7 +28,8 @@
 </template>
 
 <script>
-import {getRes} from "../util/axiosAPI";
+import {getRes, postRes} from "../util/axiosAPI";
+import { ElMessage } from "element-plus/es";
 
 export default {
   name: "moneyList",
@@ -42,6 +41,13 @@ export default {
           _this.list = res.data;
         }
     )
+
+    ElMessage({
+          message: '点击对应账单可删除：）',
+          type: 'info',
+          center: true,
+          duration: 1000
+        });
   },
   data(){
     return{
@@ -50,6 +56,30 @@ export default {
       ]
     }
   },
+  methods:{
+    deleteBill(item,index){
+      let is_confirm = confirm("是否要删除账单：" + item.title + "?");
+      if(is_confirm){
+        const _this = this;
+        postRes(
+          '/deleteBill/' + item.id,
+          {}
+            ,
+          res =>{
+          
+            if(res.data.code === 200){
+            ElMessage({
+              message:'删除成功',
+              type:'success'
+            });
+              _this.list.splice(index,1);
+            }
+            
+          }
+        )
+      }
+    }
+  }
 
 }
 </script>
@@ -76,6 +106,7 @@ export default {
   display: grid;
   grid-template-columns: 77% 23%;
   padding: 15px;/*字和边框的距离*/
+  z-index: 1;
 }
 .title{
   font-weight: bold;
@@ -93,5 +124,12 @@ export default {
 }
 .timeAndTag{
   margin-top: 5px;
+}
+.delete{
+  width: 1px;
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>
