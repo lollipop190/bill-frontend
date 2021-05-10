@@ -8,7 +8,9 @@
 
   </router-link>
 
-  <div v-for="(item, index) in list" class="item" @click="deleteBill(item,index)">
+  <div v-for="(item, index) in list" class="itemContainer" >
+    <div class="delete" @click="deleteBill(item,index)"><span id="close"></span></div>
+    <div class="item">
     <div>
     <div class="title">
       {{item.title}}
@@ -18,10 +20,8 @@
       <span v-for="tag in item.tags" class="tag">{{tag}}</span>
     </div>
     </div>
-
-
     <div class="amount">-{{item.amount}}</div>
-
+    </div>
 
   </div>
 </div>
@@ -41,13 +41,6 @@ export default {
           _this.list = res.data;
         }
     )
-
-    ElMessage({
-          message: '点击对应账单可删除：）',
-          type: 'info',
-          center: true,
-          duration: 1000
-        });
   },
   data(){
     return{
@@ -126,10 +119,37 @@ export default {
   margin-top: 5px;
 }
 .delete{
-  width: 1px;
+  width :20px;
+  height:20px;
+  text-align: center;
   z-index: 3;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -6px;
+  right: 0px;
+  border: 2px solid whitesmoke;
+  background-color: whitesmoke;
+  border-radius: 50%;
 }
+
+.itemContainer{
+  position: relative;
+}
+
+ #close {
+        display: inline-block;
+        width: 10px;
+        height: 1px;
+        background: #333;
+        transform: rotate(45deg);
+        margin-bottom: 5px;
+    }
+
+    #close::after {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 1px;
+        background: #333;
+        transform: rotate(-90deg);
+    }
 </style>
