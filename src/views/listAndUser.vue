@@ -113,11 +113,10 @@ export default {
 }
 
 .tag{
-  font-size: 1px;
+  font-size: 12px;
   padding: 2px;
-  /* background-color: #40E0D0; */
-  border:1px solid #40E0D0;
-  color: #40E0D0;
+  border:1px solid #20B2AA;
+  color: #20B2AA;
   border-radius: 15px;
   margin-left: 5px;
   display: inline-block;
