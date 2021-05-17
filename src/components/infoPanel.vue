@@ -16,7 +16,7 @@ export default {
   mounted() {
       const _this = this;
     getRes(
-        '/allDetailBillAmount',
+        '/bill/allDetailBillAmount',
         res =>{
 
           for (let i = 0; i < res.data.length; i++) {

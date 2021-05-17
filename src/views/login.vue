@@ -59,7 +59,7 @@ export default {
   methods:{
     submit(){
       let _this = this;
-      postRes('/loginOrSign',_this.ruleForm,  res =>{
+      postRes('/user/loginOrSign',_this.ruleForm,  res =>{
         if (res.data.msg === 'wrong'){
           _this.$message({
             message:'密码错误或者用户名已存在！',

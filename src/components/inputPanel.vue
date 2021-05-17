@@ -51,7 +51,7 @@ export default {
     }
 
     getRes(
-        '/allTags',
+        '/tag/allTags',
         res =>{
           let tags = res.data;
           console.log();
@@ -163,7 +163,7 @@ export default {
           tagSelected.push(_this.tags[i])
       }
         postRes(
-            '/newBill',
+            '/bill/newBill',
             {
               title: _this.title,
               amount: _this.items[0],

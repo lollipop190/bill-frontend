@@ -12,15 +12,19 @@
     <div class="delete" @click="deleteBill(item,index)"><span id="close"></span></div>
     <div class="item">
     <div>
-    <div class="title">
-      {{item.title}}
+    <div class="titleAndTag">
+      <div class="title">{{item.bill.title}}</div>
+      <!-- <div class="tagContainer">
+          <div v-for="tag in item.tags" class="tag">{{tag.name}}</div>
+      </div> -->
+
+      </div>
+    
+    <div class="date">
+      <span>{{item.bill.date}}</span>
     </div>
-    <div class="timeAndTag">
-      <span>{{item.date}}</span>
-      <span v-for="tag in item.tags" class="tag">{{tag}}</span>
     </div>
-    </div>
-    <div class="amount">-{{item.amount}}</div>
+    <div class="amount">-{{item.bill.amount}}</div>
     </div>
 
   </div>
@@ -36,7 +40,7 @@ export default {
   mounted() {
     const _this = this;
     getRes(
-        '/allBills',
+        '/bill/allBills',
         res =>{
           _this.list = res.data;
         }
@@ -51,11 +55,11 @@ export default {
   },
   methods:{
     deleteBill(item,index){
-      let is_confirm = confirm("是否要删除账单：" + item.title + "?");
+      let is_confirm = confirm("是否要删除账单：" + item.bill.title + "?");
       if(is_confirm){
         const _this = this;
         postRes(
-          '/deleteBill/' + item.id,
+          '/bill/deleteBill/' + item.bill.id,
           {}
             ,
           res =>{
@@ -97,26 +101,36 @@ export default {
 
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
   display: grid;
-  grid-template-columns: 77% 23%;
+  grid-template-columns: 73% 27%;
   padding: 15px;/*字和边框的距离*/
   z-index: 1;
 }
+
 .title{
   font-weight: bold;
   font-size: 16px;
+  display: inline-block;
+}
+.tagContainer{
+  display: inline-block;
+}
+.tag{
+  font-size: 5px;
+  /* border: 1px solid black; */
+
+  display: inline-block;
+  position: absolute;
 }
 .amount{
   color: #40E0D0;
-  font-size: 25px;
-  padding: 5px;
-
+  font-size: 23px;
+  padding: 7px;
+  text-align: right;
   font-weight: bolder;
 }
-.tag{
-  margin-left: 5px;
-}
-.timeAndTag{
-  margin-top: 5px;
+
+.date{
+  margin-top: 7px;
 }
 .delete{
   width :20px;

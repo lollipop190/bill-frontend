@@ -8,8 +8,8 @@ import dataV from '@jiaminghi/data-view'
 import './registerServiceWorker'
 
 
-axios.defaults.baseURL = 'http://121.40.99.110:8182/user'
-// axios.defaults.baseURL = 'http://localhost:8182/user'
+axios.defaults.baseURL = 'http://121.40.99.110:8182'
+// axios.defaults.baseURL = 'http://localhost:8182'
 const app = createApp(App)
 installElementPlus(app)
 
