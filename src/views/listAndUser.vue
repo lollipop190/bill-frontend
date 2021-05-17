@@ -14,9 +14,9 @@
     <div>
     <div class="titleAndTag">
       <div class="title">{{item.bill.title}}</div>
-      <!-- <div class="tagContainer">
+      <!-- <div class="tagContainer"> -->
           <div v-for="tag in item.tags" class="tag">{{tag.name}}</div>
-      </div> -->
+      <!-- </div> -->
 
       </div>
     
@@ -111,15 +111,19 @@ export default {
   font-size: 16px;
   display: inline-block;
 }
-.tagContainer{
-  display: inline-block;
-}
-.tag{
-  font-size: 5px;
-  /* border: 1px solid black; */
 
+.tag{
+  font-size: 1px;
+  padding: 2px;
+  /* background-color: #40E0D0; */
+  border:1px solid #40E0D0;
+  color: #40E0D0;
+  border-radius: 15px;
+  margin-left: 5px;
   display: inline-block;
-  position: absolute;
+  position: relative;
+  top: -10px;
+  left: 5px;
 }
 .amount{
   color: #40E0D0;
