@@ -37,3 +37,22 @@
 - [ ] 每月预算
 - [ ] 列表加入时间轴
 - [ ] 查找
+- [ ] 主界面布局优化 -> 隐藏输入计算器
+- [ ] 导出账单
+
+
+# 文档目录
+- 技术实现
+- 使用说明
+- 产品特色
+- 项目结构
+- 使用样例
+- 运行截图
+- 项目分工
+
+# 可视化工具
+
+- [vue-echarts](https://blog.csdn.net/zhongguohaoshaonian/article/details/89405546)
+- [在vue中使用echarts](https://www.cnblogs.com/ludeng-blog/p/12531903.html)
+- [echarts官网](https://echarts.apache.org/zh/index.html)
+
