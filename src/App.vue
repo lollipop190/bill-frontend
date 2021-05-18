@@ -1,6 +1,8 @@
 <template>
-  <router-view/>
-
+  <div>
+    <router-view/>
+    <tab-bar></tab-bar>
+  </div>
 </template>
 
 <style>
@@ -29,7 +31,10 @@
 </style>
 <script>
 import MoneyCounter from "./views/moneyCounter";
+import TabBar from "./components/tabbar/TabBar";
+import TarBarItem from "./components/tabbar/TarBarItem";
+
 export default {
-  components: {MoneyCounter}
+  components: {TarBarItem, TabBar, MoneyCounter}
 }
 </script>

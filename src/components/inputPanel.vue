@@ -6,34 +6,41 @@
     </div>
 
     <div class="tagContainerCon">
-    <div class="tagContainer">
-      <div v-for="(tag, index) in tags" class="tag" :class="{tagSelected: tagSelectedArray[index] === 1 , tagNotSelected: tagSelectedArray[index] === 0}" @click="handleTagClick(index)">{{tag}}</div>
-    </div>
+      <div class="tagContainer">
+        <div v-for="(tag, index) in tags" class="tag"
+             :class="{tagSelected: tagSelectedArray[index] === 1 , tagNotSelected: tagSelectedArray[index] === 0}"
+             @click="handleTagClick(index)">{{ tag }}
+        </div>
+      </div>
     </div>
     <div class="input_container">
       <input class="newtag" type="text" placeholder="添加标签" v-model="newTag">
 
-        <i class="el-icon-check" style="font-size: 20px;" @click="addNewTag"></i>
+      <i class="el-icon-check" style="font-size: 20px;" @click="addNewTag"></i>
 
 
     </div>
-
 
 
     <div class="numContainer">
-      <div v-for="(item,index) in items" class="item" :class="{wider_item:index === 0, ripple:index !== 0}" @click="handleNumClick(index)">{{item}}</div>
+      <div v-for="(item,index) in items" class="item" :class="{wider_item:index === 0, ripple:index !== 0}"
+           @click="handleNumClick(index)">{{ item }}
+      </div>
     </div>
 
-    <router-link to="/list">
-      <el-button style="margin-top: 10px" type="primary" round>账单</el-button>
+<!--    <router-link to="/list">-->
+<!--      <el-button style="margin-top: 10px" type="primary" round>账单</el-button>-->
+<!--    </router-link>-->
 
-    </router-link>
+<!--    <el-button style="margin-top: 10px;margin-left: 10px;margin-right: 10px" type="success" round-->
+<!--               :disabled="title_is_null" @click="upload">提交-->
+<!--    </el-button>-->
 
-    <el-button style="margin-top: 10px;margin-left: 10px;margin-right: 10px" type="success" round :disabled="title_is_null" @click="upload">提交</el-button>
-    <router-link to="/user">
-      <el-button style="margin-top: 10px" type="info" round>
-      帮助
-    </el-button></router-link>
+<!--    <router-link to="/user">-->
+<!--      <el-button style="margin-top: 10px" type="info" round>-->
+<!--        帮助-->
+<!--      </el-button>-->
+<!--    </router-link>-->
 
   </div>
 </template>
@@ -41,22 +48,23 @@
 <script>
 import {ElMessage} from "element-plus";
 import {getRes, postRes} from "../util/axiosAPI";
+
 export default {
   name: "inputPanel",
   mounted() {
     //标签数据
     let _this = this;
     for (let i = 0; i < this.tags.length; i++) {
-        _this.tagSelectedArray.push(0);
+      _this.tagSelectedArray.push(0);
     }
 
     getRes(
         '/tag/allTags',
-        res =>{
+        res => {
           let tags = res.data;
           console.log();
           for (let i = 0; i < tags.length; i++) {
-            if (!_this.tags.includes(tags[i]['name'])){
+            if (!_this.tags.includes(tags[i]['name'])) {
               _this.tags.push(tags[i]['name']);
               _this.tagSelectedArray.push(0);
             }
@@ -64,27 +72,27 @@ export default {
 
         }
     )
-    
+
   },
-  data(){
-    return{
+  data() {
+    return {
       tags:
           [
-          '餐饮',
-          '交通',
-          '学习','医疗'
-      ]
-  ,
-      title:"",
-      newTag:"",
-      tagSelectedArray:[],
-      items:['0','<',1,2,3,4,5,6,7,8,9,'c',0,'.']
+            '餐饮',
+            '交通',
+            '学习', '医疗'
+          ]
+      ,
+      title: "",
+      newTag: "",
+      tagSelectedArray: [],
+      items: ['0', '<', 1, 2, 3, 4, 5, 6, 7, 8, 9, 'c', 0, '.']
     }
   },
-  methods:{
-    handleNumClick(index){
-      if(this.items[0].indexOf('.') !== -1 &&(this.items[0].length > this.items[0].indexOf('.') + 2) && index !==11 && index !== 1){
-         ElMessage.warning({
+  methods: {
+    handleNumClick(index) {
+      if (this.items[0].indexOf('.') !== -1 && (this.items[0].length > this.items[0].indexOf('.') + 2) && index !== 11 && index !== 1) {
+        ElMessage.warning({
           message: "最多输入两位小数：）",
           type: "warning",
           duration: 1000,
@@ -98,11 +106,11 @@ export default {
         case 0:
           break;
         case 1:
-          if (this.items[0].length === 1){
+          if (this.items[0].length === 1) {
             this.items[0] = '0';
             break;
           }
-          this.items[0] = this.items[0].slice(0,this.items[0].length - 1);
+          this.items[0] = this.items[0].slice(0, this.items[0].length - 1);
           break;
         case 2:
         case 3:
@@ -131,12 +139,11 @@ export default {
           break;
 
 
-
       }
     },
-    addNewTag(){
-      if(this.newTag === "") return;
-      if (this.tags.includes(this.newTag)){
+    addNewTag() {
+      if (this.newTag === "") return;
+      if (this.tags.includes(this.newTag)) {
         ElMessage.warning({
           message: "标签已存在",
           type: "warning",
@@ -144,48 +151,48 @@ export default {
           center: true,
           offset: 10,
         });
-      }else {
+      } else {
         this.tags.push(this.newTag);
         this.tagSelectedArray.push(0);
         this.tagSelectedArray[this.tagSelectedArray.length - 1] = 1;
       }
       this.newTag = "";
     },
-    handleTagClick(index){
-      this.tagSelectedArray[index] = (this.tagSelectedArray[index] === 0) ? 1: 0;
+    handleTagClick(index) {
+      this.tagSelectedArray[index] = (this.tagSelectedArray[index] === 0) ? 1 : 0;
     },
-    upload(){
+    upload() {
       const _this = this;
 
       let tagSelected = [];
       for (let i = 0; i < _this.tags.length; i++) {
-        if(_this.tagSelectedArray[i])
+        if (_this.tagSelectedArray[i])
           tagSelected.push(_this.tags[i])
       }
-        postRes(
-            '/bill/newBill',
-            {
-              title: _this.title,
-              amount: _this.items[0],
-              tagSelected: tagSelected
-            }, res =>{
-              if(res.data.code === 200){
+      postRes(
+          '/bill/newBill',
+          {
+            title: _this.title,
+            amount: _this.items[0],
+            tagSelected: tagSelected
+          }, res => {
+            if (res.data.code === 200) {
 
-                _this.$message({
-                  message:'添加成功！',
-                  type: 'success'
-                })
-                setTimeout(()=>{
-                  window.location.reload();
-                }, 1000);
-              }
+              _this.$message({
+                message: '添加成功！',
+                type: 'success'
+              })
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
             }
-        );
+          }
+      );
 
     }
   },
-  computed:{
-    title_is_null(){
+  computed: {
+    title_is_null() {
       return this.title === "" || this.items[0] === '0';
     }
   },
@@ -193,26 +200,30 @@ export default {
 </script>
 
 <style scoped>
-.tagContainerCon{
+.tagContainerCon {
   margin-top: 10px;
 }
-.tagSelected{
+
+.tagSelected {
   font-weight: bold;
   color: black;
-  border: 2px  black solid;
+  border: 2px black solid;
 
 }
-.tagNotSelected{
-  border: 2px  gray solid;
+
+.tagNotSelected {
+  border: 2px gray solid;
   color: gray;
 }
-.tagContainer{
+
+.tagContainer {
   margin: auto;
   width: 60%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-.tag{
+
+.tag {
 
   border-radius: 10px;
   margin: 2px;
@@ -220,47 +231,52 @@ export default {
 
 }
 
-input{
+input {
   border: 2px solid white;
   border-radius: 10px;
   font-size: 20px;
 }
-.title{
+
+.title {
   width: 40%;
 }
-.newtag{
+
+.newtag {
   font-size: 15px;
   width: 20%;
 
 }
-input::placeholder{
+
+input::placeholder {
   color: forestgreen;
 }
-.input_container{
+
+.input_container {
   margin-top: 10px;
 }
 
 
-
-.numContainer{
+.numContainer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 80%;
   margin: auto;
 
 }
-.wider_item{
+
+.wider_item {
   grid-column-start: 1;
   grid-column-end: 3;
   text-align: right;
   padding: 0;
 }
-.item{
+
+.item {
   border: 2px solid black;
   margin: 1px 1px 1px 1px;
   border-radius: 10px;
   font-size: 50px;
-  font-family: "Space Mono",monospace;
+  font-family: "Space Mono", monospace;
   overflow: auto;
 }
 
@@ -292,8 +308,6 @@ input::placeholder{
   opacity: .3;
   transition: 0s;
 }
-
-
 
 
 </style>

@@ -11,7 +11,7 @@ module.exports = {
     //         }
     //     }
     // }
-    configureWebpack:{
-        name: 'Bill'
-    }
+    configureWebpack: {
+        name: 'Bill',
+    },
 }
