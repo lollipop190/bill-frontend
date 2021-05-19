@@ -16,9 +16,7 @@
 export default {
   name: "TarBarItem",
   props: {
-    path: String
-  },
-  data() {
+    path: String,
   },
   computed:{
     isActive(){
@@ -41,6 +39,8 @@ export default {
   text-align: center;
   height: 70px;
   font-size: 10px;
+  background-color: #40E0D0;
+  /*bottom: 0;*/
 }
 
 .active {

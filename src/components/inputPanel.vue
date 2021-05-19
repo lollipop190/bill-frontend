@@ -32,9 +32,9 @@
 <!--      <el-button style="margin-top: 10px" type="primary" round>账单</el-button>-->
 <!--    </router-link>-->
 
-<!--    <el-button style="margin-top: 10px;margin-left: 10px;margin-right: 10px" type="success" round-->
-<!--               :disabled="title_is_null" @click="upload">提交-->
-<!--    </el-button>-->
+    <el-button style="margin-top: 10px;margin-left: 10px;margin-right: 10px" type="success" round
+               :disabled="title_is_null" @click="upload">提交
+    </el-button>
 
 <!--    <router-link to="/user">-->
 <!--      <el-button style="margin-top: 10px" type="info" round>-->

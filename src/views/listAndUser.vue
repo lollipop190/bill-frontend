@@ -4,22 +4,33 @@
       <el-button type="" icon="el-icon-arrow-left" class="back">返回</el-button>
     </router-link>
 
-    <div v-for="(item, index) in list" class="itemContainer">
-      <div class="delete" @click="deleteBill(item,index)"><span id="close"></span></div>
-      <div class="item">
-        <div>
-          <div class="titleAndTag">
-            <div class="title">{{ item.bill.title }}</div>
-            <!-- <div class="tagContainer"> -->
-            <div v-for="tag in item.tags" class="tag">{{ tag.name }}</div>
-            <!-- </div> -->
-          </div>
+    <div v-for="(item, index) in list">
 
-          <div class="date">
-            <span>{{ item.bill.date }}</span>
+      <el-divider v-if="isToday(item.bill.date) && index===0" content-position="left" class="my-divider">今天</el-divider>
+      <el-divider v-if="isYesterday(item.bill.date) && index!==0" content-position="left" class="my-divider">昨天
+      </el-divider>
+      <el-divider v-if="index > 1 && isNew(item.bill.date, list[index-1].bill.date)" content-position="left"
+                  class="my-divider">
+        {{ item.bill.date.substring(0, 10) }}
+      </el-divider>
+
+      <div class="itemContainer">
+        <div class="delete" @click="deleteBill(item,index)"><span id="close"></span></div>
+        <div class="item">
+          <div>
+            <div class="titleAndTag">
+              <div class="title">{{ item.bill.title }}</div>
+              <!-- <div class="tagContainer"> -->
+              <div v-for="tag in item.tags" class="tag">{{ tag.name }}</div>
+              <!-- </div> -->
+            </div>
+
+            <div class="date">
+              <span>{{ item.bill.date }}</span>
+            </div>
           </div>
+          <div class="amount">-{{ item.bill.amount }}</div>
         </div>
-        <div class="amount">-{{ item.bill.amount }}</div>
       </div>
     </div>
   </div>
@@ -47,6 +58,19 @@ export default {
     }
   },
   methods: {
+    isToday(date) {
+      let _date = Date.parse(date);
+      return (Date.now() - _date) / (24 * 60 * 60 * 1000) <= 1;
+    },
+    isYesterday(date) {
+      let _date = Date.parse(date);
+      return (Date.now() - _date) / (24 * 60 * 60 * 1000) <= 2 && (Date.now() - _date) / (24 * 60 * 60 * 1000) > 1;
+    },
+    isNew(nextDate, lastDate) {
+      let _nextDate = Date.parse(nextDate);
+      let _lastDate = Date.parse(lastDate);
+      return (_lastDate - _nextDate) / (24 * 60 * 60 * 1000) > 1;
+    },
     // deleteBill(item,index){
     //   let is_confirm = confirm("是否要删除账单：" + item.bill.title + "?");
     //   if(is_confirm){
@@ -191,10 +215,21 @@ export default {
   background: #333;
   transform: rotate(-90deg);
 }
+
+.my-divider {
+  background-color: #50e1dc;
+  height: 5px;
+  box-shadow: 0 -2px 2px rgba(100, 100, 100, 0.2);
+}
 </style>
 <style>
-.winClass{
+.winClass {
   max-width: 80%;
   /*color: #40E0D0;*/
+}
+
+.el-divider__text {
+  background-color: #40E0D0;
+  text-align: center;
 }
 </style>
