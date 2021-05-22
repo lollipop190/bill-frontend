@@ -18,14 +18,18 @@ export default {
   props: {
     path: String,
   },
-  computed:{
-    isActive(){
-      return this.$route.path===this.path;
+  computed: {
+    isActive() {
+      if (this.path === "/") {
+        return this.$route.path === "/";
+      } else {
+        return this.$route.path.indexOf(this.path) !== -1;
+      }
     }
   },
   methods: {
     itemClick() {
-      if (this.$route.path !== this.path){
+      if (this.$route.path !== this.path) {
         this.$router.replace(this.path);
       }
     }

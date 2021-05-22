@@ -1,7 +1,9 @@
 <template>
   <div>
-    <router-view/>
-    <tab-bar></tab-bar>
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
+    <tab-bar v-if="$route.path!=='/login'"></tab-bar>
   </div>
 </template>
 

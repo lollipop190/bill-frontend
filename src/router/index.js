@@ -22,7 +22,17 @@ const routes = [
     path:'/login',
     name: 'login',
     component: () => import('../views/login')
-  }
+  },
+  {
+    path: '/statistics',
+    name: 'statistics',
+    component: () => import('../views/statistics'),
+  },
+  {
+    path: '/share',
+    name: 'share',
+    component: () => import('../views/share')
+  },
 ]
 
 const router = createRouter({
@@ -56,7 +66,6 @@ router.beforeEach(
         next();
       }
     }
-
   }
 );
 

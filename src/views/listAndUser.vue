@@ -4,14 +4,23 @@
       <el-button type="" icon="el-icon-arrow-left" class="back">返回</el-button>
     </router-link>
 
+
     <div v-for="(item, index) in list">
 
-      <el-divider v-if="isToday(item.bill.date) && index===0" content-position="left" class="my-divider">今天</el-divider>
-      <el-divider v-if="isYesterday(item.bill.date) && index!==0" content-position="left" class="my-divider">昨天
+      <el-divider
+          v-if="isToday(item.bill.date) && index===0"
+          content-position="left"
+          class="my-divider">今天
       </el-divider>
-      <el-divider v-if="index > 1 && isNew(item.bill.date, list[index-1].bill.date)" content-position="left"
-                  class="my-divider">
-        {{ item.bill.date.substring(0, 10) }}
+      <el-divider
+          v-if="isYesterday(item.bill.date) && (index===0 || (index > 0) && isNew(item.bill.date, list[index-1].bill.date))"
+          content-position="left"
+          class="my-divider">昨天
+      </el-divider>
+      <el-divider
+          v-if="index >= 1 && !isYesterday(item.bill.date) && isNew(item.bill.date, list[index-1].bill.date)"
+          content-position="left"
+          class="my-divider">{{ item.bill.date.substring(0, 10) }}
       </el-divider>
 
       <div class="itemContainer">
@@ -59,17 +68,25 @@ export default {
   },
   methods: {
     isToday(date) {
-      let _date = Date.parse(date);
-      return (Date.now() - _date) / (24 * 60 * 60 * 1000) <= 1;
+      let nextDate = new Date(date);
+      let lastDate = new Date();
+      let _nextDate = Date.parse(nextDate.getFullYear() + '-' + (nextDate.getMonth() + 1) + '-' + nextDate.getDate());
+      let _lastDate = Date.parse(lastDate.getFullYear() + '-' + (lastDate.getMonth() + 1) + '-' + lastDate.getDate());
+      return _lastDate === _nextDate;
     },
     isYesterday(date) {
-      let _date = Date.parse(date);
-      return (Date.now() - _date) / (24 * 60 * 60 * 1000) <= 2 && (Date.now() - _date) / (24 * 60 * 60 * 1000) > 1;
+      let nextDate = new Date(date);
+      let lastDate = new Date();
+      let _nextDate = Date.parse(nextDate.getFullYear() + '-' + (nextDate.getMonth() + 1) + '-' + nextDate.getDate());
+      let _lastDate = Date.parse(lastDate.getFullYear() + '-' + (lastDate.getMonth() + 1) + '-' + lastDate.getDate());
+      return (_lastDate - _nextDate) / (24 * 60 * 60 * 1000) < 2 && (_lastDate - _nextDate) / (24 * 60 * 60 * 1000) >= 1;
     },
     isNew(nextDate, lastDate) {
-      let _nextDate = Date.parse(nextDate);
-      let _lastDate = Date.parse(lastDate);
-      return (_lastDate - _nextDate) / (24 * 60 * 60 * 1000) > 1;
+      nextDate = new Date(nextDate);
+      lastDate = new Date(lastDate);
+      let _nextDate = Date.parse(nextDate.getFullYear() + '-' + (nextDate.getMonth() + 1) + '-' + nextDate.getDate());
+      let _lastDate = Date.parse(lastDate.getFullYear() + '-' + (lastDate.getMonth() + 1) + '-' + lastDate.getDate());
+      return !(_lastDate === _nextDate);
     },
     // deleteBill(item,index){
     //   let is_confirm = confirm("是否要删除账单：" + item.bill.title + "?");
@@ -217,9 +234,13 @@ export default {
 }
 
 .my-divider {
-  background-color: #50e1dc;
-  height: 5px;
-  box-shadow: 0 -2px 2px rgba(100, 100, 100, 0.2);
+  background-color: #aeff79;
+  height: 9px;
+  width: auto;
+  box-shadow: 0 -3px 2px rgba(200, 200, 200, 0.2);
+  border: 2px solid #aeff79;
+  border-radius: 10px;
+  margin: 20px 2%;
 }
 </style>
 <style>
@@ -231,5 +252,7 @@ export default {
 .el-divider__text {
   background-color: #40E0D0;
   text-align: center;
+  font-size: 15px;
+  margin-top: 5px;
 }
 </style>
