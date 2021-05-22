@@ -51,7 +51,7 @@ export default {
         res => {
           _this.list = res.data;
           _this.$nextTick(() => {
-            this.$refs.week.draw("chart", this.list);
+            this.$refs.week.draw(this.list);
           })
         }
     )
@@ -63,19 +63,19 @@ export default {
           case 0:
             this.index = 0;
             this.$nextTick(() => {
-              this.$refs.week.draw("chart", this.list);
+              this.$refs.week.draw(this.list);
             })
             break;
           case 1:
             this.index = 1;
             this.$nextTick(() => {
-              this.$refs.month.draw("chart_month", this.list);
+              this.$refs.month.draw(this.list);
             })
             break;
           case 2:
             this.index = 2;
             this.$nextTick(() => {
-              this.$refs.year.draw("chart_year", this.list);
+              this.$refs.year.draw(this.list);
             })
             break;
         }

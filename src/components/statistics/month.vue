@@ -7,6 +7,11 @@
       平均值：{{ average }}
     </div>
     <v-chart id="chart_month" class="chart" :option="option"></v-chart>
+
+    <div class="sort">
+      <div>支出排行榜</div>
+      <v-chart class="chart" :option="option_sort"></v-chart>
+    </div>
   </div>
 </template>
 
@@ -15,7 +20,7 @@
 import * as echarts from 'echarts';
 import {use} from "echarts/core";
 import {CanvasRenderer} from "echarts/renderers";
-import {LineChart} from "echarts/charts";
+import {LineChart, BarChart} from "echarts/charts";
 import {
   TitleComponent,
   TooltipComponent,
@@ -27,6 +32,7 @@ import {ref, defineComponent} from "vue";
 use([
   CanvasRenderer,
   LineChart,
+  BarChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent
@@ -40,6 +46,7 @@ export default {
       // average: 0,
       // list: [],
       option: "",
+      option_sort: "",
     }
   },
   components: {
@@ -63,7 +70,7 @@ export default {
   //   )
   // },
   methods: {
-    draw(id, list) {
+    draw(list) {
       this.all = 0;
       // let dom = document.getElementById(id);
       // let instance = echarts.init(dom);
@@ -77,8 +84,55 @@ export default {
         series: [{
           type: 'line',
           encode: {x: 0, y: 1}
-        }]
-      };
+        }],
+        grid: {
+          top: '10%',
+          left: '3%',
+          right: '10%',
+          bottom: '10%',
+          containLabel: true
+        },
+      }
+
+      let option_sort = {
+        dataset: {
+          source: [
+            // ["医疗", 50],
+            // ["饮食", 20],
+            // ["学习", 65],
+            // ["工作", 90]
+          ]
+        },
+        xAxis: {
+          max: 'dataMax',
+        },
+        yAxis: {
+          type: 'category',
+          inverse: true,
+          max: 4
+        },
+        series: [{
+          type: 'bar',
+          realtimeSort: true,
+          label: {
+            show: true,
+            position: 'right',
+            valueAnimation: true
+          },
+          encode: {x: 1, y: 0}
+        }],
+        grid: {
+          top: '10%',
+          left: '3%',
+          right: '10%',
+          bottom: '10%',
+          containLabel: true
+        },
+        animationDuration: 0,
+      }
+
+      let sort_data = {};
+
       let date = new Date();
       let month = date.getMonth() + 1;
       let day_count = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -94,10 +148,22 @@ export default {
             if (this.isSameDay(itemDate, days[j])) {
               option.dataset.source[j][1] += list[i].bill.amount;
               this.all += list[i].bill.amount;
+              for (let k = 0; k < list[i].tags.length; k++) {
+                if (!sort_data.hasOwnProperty(list[i].tags[k].name)) {
+                  sort_data[list[i].tags[k].name] = list[i].bill.amount;
+                } else {
+                  sort_data[list[i].tags[k].name] += list[i].bill.amount;
+                }
+              }
             }
           }
         }
       }
+      for (let i = 0; i < Object.keys(sort_data).length; i++) {
+        option_sort.dataset.source.push([Object.keys(sort_data)[i], sort_data[Object.keys(sort_data)[i]]]);
+      }
+      // console.log(sort_data);
+      this.option_sort = option_sort;
       // instance.setOption(option);
       this.option = option;
     },
@@ -125,5 +191,9 @@ export default {
   width: 100%;
   height: 300px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
+.sort {
+  margin-left: 3px;
+  margin-top: 10px;
 }
 </style>
