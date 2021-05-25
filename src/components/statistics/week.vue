@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-left: 3px">
-      总支出：{{ all }}
+      总支出：{{ all.toFixed(2) }}
     </div>
     <div style="margin-left: 3px">
       平均值：{{ average }}
@@ -12,12 +12,11 @@
       <div>支出排行榜</div>
       <v-chart class="chart" :option="option_sort"></v-chart>
     </div>
-    <!--    <v-chart id="chart_sort" class="chart" :option="option_sort"></v-chart>-->
   </div>
 </template>
 
 <script>
-//虽然下面这一句是灰的，但是一定不要删
+//虽然下面这一句是灰的，但是一定不要删，删了会有莫名的错误:（
 import * as echarts from 'echarts';
 import {use} from "echarts/core";
 import {CanvasRenderer} from "echarts/renderers";

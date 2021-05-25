@@ -43,7 +43,7 @@ export default {
   text-align: center;
   height: 70px;
   font-size: 10px;
-  background-color: #40E0D0;
+  background-color: #fffab3;
   /*bottom: 0;*/
 }
 

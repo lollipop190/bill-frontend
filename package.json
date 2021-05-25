@@ -12,6 +12,7 @@
     "echarts": "^5.1.1",
     "element-plus": "^1.0.2-beta.34",
     "jquery": "^3.6.0",
+    "jwt-decode": "^3.1.2",
     "register-service-worker": "^1.7.1",
     "uview-ui": "^1.8.3",
     "vue": "^3.0.11",
@@ -26,6 +27,7 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "vue-cli-plugin-element-plus": "0.0.13",
     "webpack-cli": "^4.5.0"
   },

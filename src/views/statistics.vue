@@ -101,6 +101,7 @@ export default {
 }
 
 .active {
-  background-color: #25e09f
+  /*background-color: #25e09f*/
+  background-color: #fff585;
 }
 </style>

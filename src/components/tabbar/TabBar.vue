@@ -104,7 +104,7 @@ export default {
 #tab-bar {
   display: flex;
   align-items: flex-end;
-  background-color: #40E0D0;
+  background-color: #fffab3;
   position: fixed;
   left: 0;
   right: 0;

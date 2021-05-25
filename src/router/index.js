@@ -33,6 +33,11 @@ const routes = [
     name: 'share',
     component: () => import('../views/share')
   },
+  {
+    path: '/shareBills/:id',
+    name: 'shareBills',
+    component: () => import('../components/share/shareList')
+  }
 ]
 
 const router = createRouter({

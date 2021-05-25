@@ -1,71 +1,74 @@
 <template>
-  <div class="container">
-    <router-link to="/">
-      <el-button type="" icon="el-icon-arrow-left" class="back">返回</el-button>
-    </router-link>
 
+  <!--  <el-card class="box-card">-->
+  <!--    <template #header>-->
+  <!--      <div class="card-header">-->
+  <!--        <span>{{ username }}</span>-->
+  <!--        <el-button class="button" type="text">关闭</el-button>-->
+  <!--      </div>-->
+  <!--    </template>-->
+  <!--    <el-scrollbar height="200px">-->
+  <div v-for="(item, index) in list">
+    <el-divider
+        v-if="isToday(item.bill.date) && index===0"
+        content-position="left"
+        class="my-divider">今天
+    </el-divider>
+    <el-divider
+        v-if="isYesterday(item.bill.date) && (index===0 || (index > 0) && isNew(item.bill.date, list[index-1].bill.date))"
+        content-position="left"
+        class="my-divider">昨天
+    </el-divider>
+    <el-divider
+        v-if="index >= 1 && !isYesterday(item.bill.date) && isNew(item.bill.date, list[index-1].bill.date)"
+        content-position="left"
+        class="my-divider">{{ item.bill.date.substring(0, 10) }}
+    </el-divider>
 
-    <div v-for="(item, index) in list">
-
-      <el-divider
-          v-if="isToday(item.bill.date) && index===0"
-          content-position="left"
-          class="my-divider">今天
-      </el-divider>
-      <el-divider
-          v-if="isYesterday(item.bill.date) && (index===0 || (index > 0) && isNew(item.bill.date, list[index-1].bill.date))"
-          content-position="left"
-          class="my-divider">昨天
-      </el-divider>
-      <el-divider
-          v-if="index >= 1 && !isYesterday(item.bill.date) && isNew(item.bill.date, list[index-1].bill.date)"
-          content-position="left"
-          class="my-divider">{{ item.bill.date.substring(0, 10) }}
-      </el-divider>
-
-      <div class="itemContainer">
-        <div class="delete" @click="deleteBill(item,index)"><span id="close"></span></div>
-        <div class="item">
-          <div>
-            <div class="titleAndTag">
-              <div class="title">{{ item.bill.title }}</div>
-              <!-- <div class="tagContainer"> -->
-              <div v-for="tag in item.tags" class="tag">{{ tag.name }}</div>
-              <!-- </div> -->
-            </div>
-
-            <div class="date">
-              <span>{{ item.bill.date }}</span>
-            </div>
+    <div class="itemContainer">
+      <div class="item">
+        <div>
+          <div class="titleAndTag">
+            <div class="title">{{ item.bill.title }}</div>
+            <!-- <div class="tagContainer"> -->
+            <div v-for="tag in item.tags" class="tag">{{ tag.name }}</div>
+            <!-- </div> -->
           </div>
-          <div class="amount">-{{ item.bill.amount }}</div>
+
+          <div class="date">
+            <span>{{ item.bill.date }}</span>
+          </div>
         </div>
+        <div class="amount">-{{ item.bill.amount }}</div>
       </div>
     </div>
   </div>
+  <!--    </el-scrollbar>-->
+  <!--  </el-card>-->
 </template>
 
 <script>
-import {getRes, postRes} from "../util/axiosAPI";
 import {ElMessage} from "element-plus/es";
+import axios from 'axios'
+import {postRes, getRes} from "@/util/axiosAPI";
 
 export default {
-  name: "moneyList",
-  mounted() {
-    const _this = this;
-    getRes(
-        '/bill/allBills',
-        res => {
-          _this.list = res.data;
-        }
-    )
+  name: "shareList",
+  props: {
+    list: [],
+    // username: "",
   },
-  data() {
-    return {
-      list: [],
-      dialogVisible: false,
-    }
-  },
+  // data() {
+  //   return {
+  //     list: [],
+  //   }
+  // },
+  // mounted() {
+  //   console.log(this.$route.params.id);
+  //   getRes("/getShareBills/" + this.$route.params.id, res => {
+  //     this.list = res.data.data;
+  //   })
+  // },
   methods: {
     isToday(date) {
       let nextDate = new Date(date);
@@ -88,55 +91,7 @@ export default {
       let _lastDate = Date.parse(lastDate.getFullYear() + '-' + (lastDate.getMonth() + 1) + '-' + lastDate.getDate());
       return !(_lastDate === _nextDate);
     },
-    // deleteBill(item,index){
-    //   let is_confirm = confirm("是否要删除账单：" + item.bill.title + "?");
-    //   if(is_confirm){
-    //     const _this = this;
-    //     postRes(
-    //       '/bill/deleteBill/' + item.bill.id,
-    //       {}
-    //         ,
-    //       res =>{
-    //
-    //         if(res.data.code === 200){
-    //         ElMessage({
-    //           message:'删除成功',
-    //           type:'success'
-    //         });
-    //           _this.list.splice(index,1);
-    //         }
-    //
-    //       }
-    //     )
-    //   }
-    // },
-    deleteBill(item, index) {
-      this.$confirm("是否要删除账单：" + item.bill.title + "?", '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        center: true,
-        customClass: 'winClass',
-      }).then(() => {
-        const _this = this;
-        postRes(
-            '/bill/deleteBill/' + item.bill.id,
-            {},
-            res => {
-              if (res.data.code === 200) {
-                ElMessage({
-                  message: '删除成功',
-                  type: 'success'
-                });
-                _this.list.splice(index, 1);
-              }
-            }
-        )
-      }).catch(() => {
-      })
-    },
   }
-
 }
 </script>
 
@@ -243,19 +198,29 @@ export default {
   border-radius: 10px;
   margin: 20px 2%;
 }
+
+/*.card-header {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  align-items: center;*/
+/*}*/
+
+/*.text {*/
+/*  font-size: 14px;*/
+/*}*/
+
+/*.item {*/
+/*  margin-bottom: 18px;*/
+/*}*/
+
+/*.box-card {*/
+/*  width: 80%;*/
+/*}*/
 </style>
 <style>
-.winClass {
-  max-width: 80%;
-  /*color: #40E0D0;*/
-}
-
 .el-divider__text {
-  /*background-color: #fffab3;*/
   background-color: rgba(0, 0, 0, 0);
   text-align: center;
   font-size: 15px;
-  /*margin-top: 5px;*/
-  /*height: 20px;*/
 }
 </style>

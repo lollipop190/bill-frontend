@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-left: 3px">
-      总支出：{{ all }}
+      总支出：{{ all.toFixed(2) }}
     </div>
     <div style="margin-left: 3px">
       平均值：{{ average }}

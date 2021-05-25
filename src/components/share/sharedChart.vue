@@ -8,30 +8,17 @@
     </div>
   </div>
 </template>
+
 <script>
-import {getRes} from "../util/axiosAPI";
 
 export default {
-  name: 'infoPanel',
-  mounted() {
-    const _this = this;
-    getRes(
-        '/bill/allDetailBillAmount',
-        res => {
-
-          for (let i = 0; i < res.data.length; i++) {
-
-            _this.panel_list[i].money = res.data[i].toFixed(2);
-
-          }
-        }
-    )
+  name: "sharedChart",
+  props: {
+    list: [],
   },
-
-
-  data() {
-    return {
-      panel_list: [
+  computed: {
+    panel_list() {
+      let detail = [
         {
           title: '今天',
           money: 0,
@@ -58,6 +45,10 @@ export default {
           money: 0
         },
       ]
+      for (let i = 0; i < this.list.length; i++) {
+        detail[i].money = this.list[i].toFixed(2);
+      }
+      return detail;
     }
   },
 }
