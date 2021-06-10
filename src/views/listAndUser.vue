@@ -1,12 +1,6 @@
 <template>
 <div class="container">
-
-
-
-  <router-link to="/">
-    <el-button type="" icon="el-icon-arrow-left" class="back">返回</el-button>
-
-  </router-link>
+<el-input v-model="input" placeholder="请输入要搜索的内容（标题或标签名称）"></el-input>
 
   <div v-for="(item, index) in list" class="itemContainer" >
     <div class="delete" @click="deleteBill(item,index)"><span id="close"></span></div>
@@ -14,20 +8,27 @@
     <div>
     <div class="titleAndTag">
       <div class="title">{{item.bill.title}}</div>
-      <!-- <div class="tagContainer"> -->
-          <div v-for="tag in item.tags" class="tag">{{tag.name}}</div>
-      <!-- </div> -->
-
-      </div>
-    
-    <div class="date">
-      <span>{{item.bill.date}}</span>
-    </div>
+      <div v-for="tag in item.tags" class="tag">{{tag.name}}</div></div>
+    <div class="date"><span>{{item.bill.date}}</span></div>
     </div>
     <div class="amount">-{{item.bill.amount}}</div>
     </div>
 
   </div>
+
+<div class="block" v-if="!queryMode">
+  <div class="pageContainer">
+
+
+  <el-pagination
+    layout="prev, pager, next"
+    :page-size="pageSize"
+    :total="billsAmount"
+    @currentChange="getPageBill"
+    ></el-pagination>
+</div> 
+  </div>
+
 </div>
 </template>
 
@@ -39,18 +40,31 @@ export default {
   name: "moneyList",
   mounted() {
     const _this = this;
+    
     getRes(
-        '/bill/allBills',
+      '/bill/allBillsAmount',
+      res =>{
+        _this.billsAmount = res.data;
+      }
+    )
+    getRes(
+        '/bill/allBills/1/'+_this.pageSize + '/default',
         res =>{
           _this.list = res.data;
         }
     )
+
+    
   },
   data(){
     return{
+      billsAmount:0,
+      pageSize:7,
+      input:'',
+      pageIndex:1,
       list:[
-
-      ]
+      ],
+      queryMode:false
     }
   },
   methods:{
@@ -75,6 +89,48 @@ export default {
           }
         )
       }
+    },
+    getPageBill(pageIndex){
+      this.pageIndex = pageIndex;
+      const _this = this;
+      getRes(
+        '/bill/allBills/' + pageIndex + '/' + _this.pageSize + '/' + ((_this.input === '') ? 'default': _this.input),
+        res => {
+          _this.list = res.data;
+        }
+      )
+    }
+  },
+  watch: {
+    input(newQues, oldQues){
+      //具体的函数逻辑还是应该封装在methods中：
+        if (newQues.length === 0){     
+          const _this = this;
+    getRes(
+      '/bill/allBillsAmount',
+      res =>{
+        _this.billsAmount = res.data;
+      }
+    );
+    getRes(
+        '/bill/allBills/1/'+_this.pageSize + '/default',
+        res =>{
+          _this.list = res.data;
+        }
+    );
+        this.queryMode = false;
+        }else{
+          this.queryMode = true;
+          const _this = this;
+      getRes(
+        '/bill/allBills/' + 0 + '/' + 0 + '/' +  _this.input,
+        res => {
+          _this.list = res.data;
+        }
+      )
+        }
+      
+
     }
   }
 
@@ -82,6 +138,9 @@ export default {
 </script>
 
 <style scoped>
+.pageContainer{
+  margin-top: 3%;
+}
 .container{
   max-width: 600px;
   margin: 3% auto auto;

@@ -3,7 +3,7 @@ import {ElMessage} from "element-plus/es";
 
 
 export function postRes(url, data, success) {
-    axios.post(
+    return axios.post(
         url,
         data,
         {

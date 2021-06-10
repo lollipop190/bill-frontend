@@ -76,8 +76,8 @@ export default {
     text-align: center;
 }
 .title{
-  margin: 5px 5px 5px 5px;
-  font-size: 23px;
+  margin: 4px 4px 4px 4px;
+  font-size: 20px;
 }
 .moneyHolder{
   font-size: 30px;

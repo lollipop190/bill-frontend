@@ -24,16 +24,9 @@
       <div v-for="(item,index) in items" class="item" :class="{wider_item:index === 0, ripple:index !== 0}" @click="handleNumClick(index)">{{item}}</div>
     </div>
 
-    <router-link to="/list">
-      <el-button style="margin-top: 10px" type="primary" round>账单</el-button>
-
-    </router-link>
-
+  
     <el-button style="margin-top: 10px;margin-left: 10px;margin-right: 10px" type="success" round :disabled="title_is_null" @click="upload">提交</el-button>
-    <router-link to="/user">
-      <el-button style="margin-top: 10px" type="info" round>
-      帮助
-    </el-button></router-link>
+
 
   </div>
 </template>
@@ -208,9 +201,9 @@ export default {
 }
 .tagContainer{
   margin: auto;
-  width: 60%;
+  width: 75%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 .tag{
 
@@ -258,8 +251,8 @@ input::placeholder{
 .item{
   border: 2px solid black;
   margin: 1px 1px 1px 1px;
-  border-radius: 10px;
-  font-size: 50px;
+  border-radius: 15px;
+  font-size: 40px;
   font-family: "Space Mono",monospace;
   overflow: auto;
 }

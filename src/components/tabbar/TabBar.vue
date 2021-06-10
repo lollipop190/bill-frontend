@@ -1,0 +1,176 @@
+<template>
+  <div>
+
+    <!-- <div id="tab-bar">
+      <tar-bar-item path="/list">
+        <template v-slot:item-icon>
+          <img class="tab-bar-img" src="../../assets/img/tabbar/list.svg" alt="">
+        </template>
+        <template v-slot:item-icon-active>
+          <img class="tab-bar-img" src="../../assets/img/tabbar/list_active.svg" alt="">
+        </template>
+        <template v-slot:item-text>
+          <div>明细</div>
+        </template>
+      </tar-bar-item>
+
+      <tar-bar-item path="/statistics">
+        <template v-slot:item-icon>
+          <img class="tab-bar-img" src="../../assets/img/tabbar/statistics.svg" alt="">
+        </template>
+        <template v-slot:item-icon-active>
+          <img class="tab-bar-img" src="../../assets/img/tabbar/statistics_active.svg" alt="">
+        </template>
+        <template v-slot:item-text>
+          <div>统计</div>
+        </template>
+      </tar-bar-item>
+
+      <tar-bar-item path="/" class="tab-bar-item-add">
+        <template v-slot:item-icon>
+          <img class="tab-bar-add" src="../../assets/img/tabbar/add.svg" alt="">
+        </template>
+        <template v-slot:item-icon-active>
+          <img class="tab-bar-add" src="../../assets/img/tabbar/add_active.svg" alt="">
+        </template>
+        <template v-slot:item-text>
+          <div slot="item-text">添加</div>
+        </template>
+      </tar-bar-item>
+
+
+      <tar-bar-item path="/share">
+        <template v-slot:item-icon>
+          <img class="tab-bar-img" src="../../assets/img/tabbar/share.svg" alt="">
+        </template>
+        <template v-slot:item-icon-active>
+          <img class="tab-bar-img" src="../../assets/img/tabbar/share_active.svg" alt="">
+        </template>
+        <template v-slot:item-text>
+          <div slot="item-text">共享</div>
+        </template>
+      </tar-bar-item>
+
+      <tar-bar-item path="/user">
+        <template v-slot:item-icon>
+          <img class="tab-bar-img" src="../../assets/img/tabbar/help.svg" alt="">
+        </template>
+        <template v-slot:item-icon-active>
+          <img class="tab-bar-img" src="../../assets/img/tabbar/help_active.svg" alt="">
+        </template>
+        <template v-slot:item-text>
+          <div slot="item-text">我的</div>
+        </template>
+      </tar-bar-item>
+    </div> -->
+
+
+    <div id="tabContainer">
+    <div id="tabBar">
+      <div class="barItem" v-for="(item,index) in barItem" @click="handleClick(index)">
+        <img :src=item.img class="tab-bar-img">
+        <div>{{item.name}}</div>
+        </div>
+       </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import TarBarItem from "./TarBarItem";
+
+export default {
+  name: "TabBar",
+  components: {TarBarItem},
+  data() {
+    return {
+      drawer: false,
+      barItem:[
+        {
+          name:'账单',
+          img:require("../../assets/img/tabbar/list.svg")
+        },{
+          name:'添加',
+          img:require('@/assets/img/tabbar/add.svg')
+        },{
+          name:'统计',
+          img:require('../../assets/img/tabbar/statistics.svg')
+        }
+      ],
+      path:[
+        '/list',
+        '/',
+        '/analysis'
+      ]
+    }
+  },
+  methods:{
+    handleClick(index){
+       if (this.$route.path !== this.path[index]){
+        this.$router.push(this.path[index]);
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+#tabBar{
+  position: static;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+#tabContainer{
+  position: fixed;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  text-align: center;
+}
+.barItem{
+  flex: 1;
+  text-align: center;
+}
+#tab-bar {
+  display: flex;
+  align-items: flex-end;
+  background-color: #40E0D0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  z-index: 999;
+
+  /*box-shadow: 0 -3px 1px rgba(100, 100, 100, 0.2);*/
+}
+
+.tab-bar-img {
+  width: 35px;
+  height: 35px;
+  margin-top: 17px;
+  vertical-align: middle;
+}
+
+.tab-bar-add {
+  width: 50px;
+  height: 50px;
+  margin-top: 2px;
+  vertical-align: middle;
+  /*box-shadow: 0 -3px 1px rgba(100, 100, 100, 0.2);*/
+}
+</style>
+<style>
+.add-drawer {
+  background-color: #40E0D0;
+}
+
+.el-drawer__header {
+  height: 20px;
+}
+
+body {
+  margin-bottom: 80px;
+}
+</style>
