@@ -11,17 +11,17 @@ const routes = [
   {
     path: '/list',
     name: 'list',
-    component: () => import('../views/listAndUser')
-  },
-  {
-    path:'/user',
-    name: 'user',
-    component: () => import('../views/helpPage')
+    component: () => import('../views/list')
   },
   {
     path:'/login',
     name: 'login',
     component: () => import('../views/login')
+  },
+  {
+    path:'/analysis',
+    name: 'analysis',
+    component:() => import('../views/analysis.vue')
   }
 ]
 

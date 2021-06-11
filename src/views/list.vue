@@ -1,7 +1,10 @@
 <template>
 <div class="container">
-<el-input v-model="input" placeholder="请输入要搜索的内容（标题或标签名称）"></el-input>
-
+<el-input v-model="input" placeholder="请输入要搜索的标题内容或直接点击下方标签检索"></el-input>
+  
+  
+  <tag @tag-selected="handleTagSelected"></tag>
+  
   <div v-for="(item, index) in list" class="itemContainer" >
     <div class="delete" @click="deleteBill(item,index)"><span id="close"></span></div>
     <div class="item">
@@ -20,10 +23,11 @@
   <div class="pageContainer">
 
 
-  <el-pagination
-    layout="prev, pager, next"
+  <el-pagination style="text-align:center"
+    layout="pager"
     :page-size="pageSize"
     :total="billsAmount"
+    page-count="7"
     @currentChange="getPageBill"
     ></el-pagination>
 </div> 
@@ -35,7 +39,8 @@
 <script>
 import {getRes, postRes} from "../util/axiosAPI";
 import { ElMessage } from "element-plus/es";
-
+import tag from '@/components/tag'
+import Tag from '../components/tag.vue';
 export default {
   name: "moneyList",
   mounted() {
@@ -45,29 +50,64 @@ export default {
       '/bill/allBillsAmount',
       res =>{
         _this.billsAmount = res.data;
+        _this.allBillsAmount = res.data;
       }
     )
     getRes(
         '/bill/allBills/1/'+_this.pageSize + '/default',
         res =>{
           _this.list = res.data;
+          _this.allBillList=  res.data;
         }
     )
-
-    
   },
   data(){
     return{
       billsAmount:0,
-      pageSize:7,
+      pageSize:6,
       input:'',
       pageIndex:1,
+      allBillList:[],
+      allBillsAmount:0,
       list:[
       ],
+      tags:[],
       queryMode:false
     }
   },
   methods:{
+    handleTagSelected(tagText){
+    const _this = this;
+    const index = this.tags.indexOf(tagText);
+    if(index === -1){
+    this.tags.push(tagText);
+    }else{
+      this.tags.splice(index, 1);
+
+      if(this.tags.length === 0){
+        this.list = this.allBillList;
+  
+        this.billsAmount = this.allBillsAmount;
+        this.queryMode = false;
+        return;
+      }
+
+    }
+
+    postRes(
+      '/bill/allBillsSelectedByTags',
+      {
+        tag: _this.tags
+      },
+      res=>{
+        _this.queryMode = true;
+        _this.list = res.data;
+        console.log(_this.list);
+      }
+    )
+    
+   
+    },
     deleteBill(item,index){
       let is_confirm = confirm("是否要删除账单：" + item.bill.title + "?");
       if(is_confirm){
@@ -106,18 +146,8 @@ export default {
       //具体的函数逻辑还是应该封装在methods中：
         if (newQues.length === 0){     
           const _this = this;
-    getRes(
-      '/bill/allBillsAmount',
-      res =>{
-        _this.billsAmount = res.data;
-      }
-    );
-    getRes(
-        '/bill/allBills/1/'+_this.pageSize + '/default',
-        res =>{
-          _this.list = res.data;
-        }
-    );
+        this.list = this.allBillList;
+        this.billsAmount = this.allBillsAmount;
         this.queryMode = false;
         }else{
           this.queryMode = true;
@@ -132,6 +162,9 @@ export default {
       
 
     }
+  },
+  components:{
+    tag
   }
 
 }
@@ -144,7 +177,6 @@ export default {
 .container{
   max-width: 600px;
   margin: 3% auto auto;
-
 }
 .back{
   border-radius: 20px;

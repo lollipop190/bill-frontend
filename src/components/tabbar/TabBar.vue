@@ -128,24 +128,6 @@ export default {
   bottom: 0;
   text-align: center;
 }
-.barItem{
-  flex: 1;
-  text-align: center;
-}
-#tab-bar {
-  display: flex;
-  align-items: flex-end;
-  background-color: #40E0D0;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-
-  z-index: 999;
-
-  /*box-shadow: 0 -3px 1px rgba(100, 100, 100, 0.2);*/
-}
-
 .tab-bar-img {
   width: 35px;
   height: 35px;
@@ -153,24 +135,5 @@ export default {
   vertical-align: middle;
 }
 
-.tab-bar-add {
-  width: 50px;
-  height: 50px;
-  margin-top: 2px;
-  vertical-align: middle;
-  /*box-shadow: 0 -3px 1px rgba(100, 100, 100, 0.2);*/
-}
 </style>
-<style>
-.add-drawer {
-  background-color: #40E0D0;
-}
 
-.el-drawer__header {
-  height: 20px;
-}
-
-body {
-  margin-bottom: 80px;
-}
-</style>

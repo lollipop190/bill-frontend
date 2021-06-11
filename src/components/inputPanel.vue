@@ -1,25 +1,13 @@
 <template>
-  <div>
+  
+  
+  
 
+  <div>
     <div class="input_container">
       <input class="title" type="text" placeholder="账单标题" v-model="title">
     </div>
-
-    <div class="tagContainerCon">
-    <div class="tagContainer">
-      <div v-for="(tag, index) in tags" class="tag" :class="{tagSelected: tagSelectedArray[index] === 1 , tagNotSelected: tagSelectedArray[index] === 0}" @click="handleTagClick(index)">{{tag}}</div>
-    </div>
-    </div>
-    <div class="input_container">
-      <input class="newtag" type="text" placeholder="添加标签" v-model="newTag">
-
-        <i class="el-icon-check" style="font-size: 20px;" @click="addNewTag"></i>
-
-
-    </div>
-
-
-
+    <tag @tag-selected="handleTagSelected"></tag>
     <div class="numContainer">
       <div v-for="(item,index) in items" class="item" :class="{wider_item:index === 0, ripple:index !== 0}" @click="handleNumClick(index)">{{item}}</div>
     </div>
@@ -34,44 +22,15 @@
 <script>
 import {ElMessage} from "element-plus";
 import {getRes, postRes} from "../util/axiosAPI";
+import tag from '@/components/tag'
 export default {
   name: "inputPanel",
-  mounted() {
-    //标签数据
-    let _this = this;
-    for (let i = 0; i < this.tags.length; i++) {
-        _this.tagSelectedArray.push(0);
-    }
-
-    getRes(
-        '/tag/allTags',
-        res =>{
-          let tags = res.data;
-          console.log();
-          for (let i = 0; i < tags.length; i++) {
-            if (!_this.tags.includes(tags[i]['name'])){
-              _this.tags.push(tags[i]['name']);
-              _this.tagSelectedArray.push(0);
-            }
-          }
-
-        }
-    )
-    
-  },
+ 
   data(){
     return{
-      tags:
-          [
-          '餐饮',
-          '交通',
-          '学习','医疗'
-      ]
-  ,
       title:"",
-      newTag:"",
-      tagSelectedArray:[],
-      items:['0','<',1,2,3,4,5,6,7,8,9,'c',0,'.']
+      items:['0','<',1,2,3,4,5,6,7,8,9,'c',0,'.'],
+      tags:[]
     }
   },
   methods:{
@@ -127,40 +86,20 @@ export default {
 
       }
     },
-    addNewTag(){
-      if(this.newTag === "") return;
-      if (this.tags.includes(this.newTag)){
-        ElMessage.warning({
-          message: "标签已存在",
-          type: "warning",
-          duration: 1000,
-          center: true,
-          offset: 10,
-        });
-      }else {
-        this.tags.push(this.newTag);
-        this.tagSelectedArray.push(0);
-        this.tagSelectedArray[this.tagSelectedArray.length - 1] = 1;
-      }
-      this.newTag = "";
-    },
-    handleTagClick(index){
-      this.tagSelectedArray[index] = (this.tagSelectedArray[index] === 0) ? 1: 0;
-    },
+  
+handleTagSelected(tagText){
+    this.tags.push(tagText);
+},
     upload(){
       const _this = this;
 
-      let tagSelected = [];
-      for (let i = 0; i < _this.tags.length; i++) {
-        if(_this.tagSelectedArray[i])
-          tagSelected.push(_this.tags[i])
-      }
+      
         postRes(
             '/bill/newBill',
             {
               title: _this.title,
               amount: _this.items[0],
-              tagSelected: tagSelected
+              tagSelected: _this.tags
             }, res =>{
               if(res.data.code === 200){
 
@@ -182,37 +121,13 @@ export default {
       return this.title === "" || this.items[0] === '0';
     }
   },
+  components:{
+    tag
+  }
 }
 </script>
 
 <style scoped>
-.tagContainerCon{
-  margin-top: 10px;
-}
-.tagSelected{
-  font-weight: bold;
-  color: black;
-  border: 2px  black solid;
-
-}
-.tagNotSelected{
-  border: 2px  gray solid;
-  color: gray;
-}
-.tagContainer{
-  margin: auto;
-  width: 75%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-}
-.tag{
-
-  border-radius: 10px;
-  margin: 2px;
-  overflow: hidden;
-
-}
-
 input{
   border: 2px solid white;
   border-radius: 10px;
@@ -221,14 +136,8 @@ input{
 .title{
   width: 40%;
 }
-.newtag{
-  font-size: 15px;
-  width: 20%;
 
-}
-input::placeholder{
-  color: forestgreen;
-}
+
 .input_container{
   margin-top: 10px;
 }
