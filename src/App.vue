@@ -11,7 +11,8 @@
   color: #2c3e50;
 
   max-width: 600px;
-  margin: 3% auto auto;
+  margin: auto;
+  margin-bottom: 80px;
 }
 
 #nav {
