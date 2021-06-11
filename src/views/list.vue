@@ -5,7 +5,19 @@
   
   <tag @tag-selected="handleTagSelected"></tag>
   
-  <div v-for="(item, index) in list" class="itemContainer" >
+  <div v-for="(item, index) in list">
+    <el-divider content-position="left" v-if="isTodayFirst(index)">
+      <div>今天</div>
+      </el-divider>
+    <el-divider content-position="left" v-if="isYeasterday(index)">
+      <div>昨天</div>
+      </el-divider>
+    <el-divider content-position="left" v-if="isBefore(index)">
+      <div>更早</div>
+      </el-divider>
+    <div class="itemContainer">
+
+    
     <div class="delete" @click="deleteBill(item,index)"><span id="close"></span></div>
     <div class="item">
     <div>
@@ -16,7 +28,7 @@
     </div>
     <div class="amount">-{{item.bill.amount}}</div>
     </div>
-
+</div>
   </div>
 
 <div class="block" v-if="!queryMode">
@@ -139,6 +151,49 @@ export default {
           _this.list = res.data;
         }
       )
+    },
+    getNowFormatDate() {
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
+    },
+    getYesterday(){
+    var time=(new Date).getTime()-24*60*60*1000;
+    var yesterday=new Date(time);
+    var month=yesterday.getMonth();
+    var day=yesterday.getDate();
+    yesterday=yesterday.getFullYear() + "-" + (yesterday.getMonth()> 9 ? (yesterday.getMonth() + 1) : "0" + (yesterday.getMonth() + 1)) + "-" +(yesterday.getDate()> 9 ? (yesterday.getDate()) : "0" + (yesterday.getDate()));
+    return yesterday;
+    },
+    isTodayFirst(index){
+      return index === 0 && this.list[index].bill.date.split(" ")[0] === ("" + this.getNowFormatDate());
+    },
+    isYeasterday(index){
+      if(this.list[index].bill.date.split(" ")[0] === this.getYesterday()){
+        if(index === 0)
+          return true;
+        else
+        return this.list[index - 1].bill.date.split(" ")[0] === ("" + this.getNowFormatDate());
+      }
+    },
+    isBefore(index){
+      if(index === 0){
+        return this.list[index].bill.date.split(" ")[0] !== this.getYesterday() && this.list[index].bill.date.split(" ")[0] !== this.getNowFormatDate();
+      }
+        else{
+        return this.list[index].bill.date.split(" ")[0] !== this.getYesterday() && this.list[index- 1].bill.date.split(" ")[0] === this.getYesterday();
+
+        }
     }
   },
   watch: {
@@ -163,6 +218,9 @@ export default {
 
     }
   },
+  computed:{
+   
+  },
   components:{
     tag
   }
@@ -170,7 +228,14 @@ export default {
 }
 </script>
 
+<style>
+
+	.el-divider__text{
+    background-color: #40E0D0;
+}
+</style>
 <style scoped>
+
 .pageContainer{
   margin-top: 3%;
 }
@@ -185,7 +250,7 @@ export default {
 .item{
   margin-left: 1%;
   margin-right: 1%;
-  margin-top: 8px;
+  margin-top: 5px;
 
   border-radius: 30px;
   background-color: #FFF;
@@ -193,7 +258,7 @@ export default {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
   display: grid;
   grid-template-columns: 73% 27%;
-  padding: 15px;/*字和边框的距离*/
+  padding: 13px;/*字和边框的距离*/
   z-index: 1;
 }
 

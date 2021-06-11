@@ -68,8 +68,9 @@
     <div id="tabContainer">
     <div id="tabBar">
       <div class="barItem" v-for="(item,index) in barItem" @click="handleClick(index)">
-        <img :src=item.img class="tab-bar-img">
-        <div>{{item.name}}</div>
+        <!-- <img :src=item.img class="tab-bar-img"> -->
+        <i :class=item.class class="icon"></i>
+        <div class="iconName">{{item.name}}</div>
         </div>
        </div>
     </div>
@@ -89,13 +90,16 @@ export default {
       barItem:[
         {
           name:'账单',
-          img:require("../../assets/img/tabbar/list.svg")
+          img:require("../../assets/img/tabbar/list.svg"),
+          class:'el-icon-notebook-2'
         },{
           name:'添加',
-          img:require('@/assets/img/tabbar/add.svg')
+          img:require('@/assets/img/tabbar/add.svg'),
+          class: "el-icon-circle-plus-outline"
         },{
           name:'统计',
-          img:require('../../assets/img/tabbar/statistics.svg')
+          img:require('../../assets/img/tabbar/statistics.svg'),
+          class:'el-icon-date'
         }
       ],
       path:[
@@ -127,11 +131,20 @@ export default {
   right: 10%;
   bottom: 0;
   text-align: center;
+  font-size: 10px;
+}
+.icon{
+  font-size: 35px;
+  color: grey;
+}
+.iconName{
+  color:grey;
+  font-size: 15px;
 }
 .tab-bar-img {
-  width: 35px;
-  height: 35px;
-  margin-top: 17px;
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
   vertical-align: middle;
 }
 

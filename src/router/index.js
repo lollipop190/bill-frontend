@@ -21,7 +21,7 @@ const routes = [
   {
     path:'/analysis',
     name: 'analysis',
-    component:() => import('../views/analysis.vue')
+    component:() => import('../views/analysis.vue'),
   }
 ]
 
