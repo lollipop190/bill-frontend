@@ -55,6 +55,7 @@ import tag from '@/components/tag'
 import Tag from '../components/tag.vue';
 export default {
   name: "moneyList",
+  
   mounted() {
     const _this = this;
     
@@ -231,7 +232,7 @@ export default {
 <style>
 
 	.el-divider__text{
-    background-color: #40E0D0;
+    background-color: #FFEFD5;
 }
 </style>
 <style scoped>

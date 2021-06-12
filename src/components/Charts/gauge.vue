@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- <dv-water-level-pond :config="config" style="width:150px;height:200px" />
-<dv-loading>Loading...</dv-loading> -->
-
     <div class="headContainer">
       <div
         class="head"
@@ -16,9 +13,13 @@
         {{ item }}
       </div>
     </div>
+    <div style="margin-left: 3px">总支出：{{ all.toFixed(2) }}</div>
+    <div style="margin-left: 3px">
+      平均值：{{ (all / upDetail.xAxis.data.length).toFixed(2) }}
+    </div>
 
-    <dv-charts :option="upDetail" style="width: 100%; height: 400px" />
-    <dv-charts :option="sortDetail" style="width: 100%; height: 300px" />
+    <dv-charts :option="upDetail" style="width: 100%; height: 280px" />
+    <dv-charts :option="sortDetail" style="width: 100%; height: 330px" />
   </div>
 </template>
 
@@ -30,23 +31,23 @@ export default {
     const _this = this;
     getRes("/bill/allBills", (res) => {
       _this.list = res.data;
-     
-        _this.drawWeek(_this.list,_this.upDetailWeek,_this.sortDetailWeek);
-        _this.drawMonth(_this.list,_this.upDetailMonth,_this.sortDetailMonth);
-        _this.drawYear(_this.list,_this.upDetailYear,_this.sortDetailYear);
-        _this.upDetail = _this.upDetailWeek;
-    
-        _this.sortDetail = _this.sortDetailWeek;
-        _this.refresh();
-      
-    
+
+      _this.drawWeek(_this.list, _this.upDetailWeek, _this.sortDetailWeek);
+      _this.drawMonth(_this.list, _this.upDetailMonth, _this.sortDetailMonth);
+      _this.drawYear(_this.list, _this.upDetailYear, _this.sortDetailYear);
+      _this.upDetail = _this.upDetailWeek;
+
+      _this.sortDetail = _this.sortDetailWeek;
+      _this.all = _this.allWeek;
+      _this.refresh();
     });
-
-
   },
   data() {
     return {
       all: 0,
+      allWeek: 0,
+      allMonth: 0,
+      allYear: 0,
       list: [],
       isActive: {
         week: true,
@@ -58,6 +59,9 @@ export default {
         title: {},
         xAxis: {
           data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+          axisLabel: {
+            show: false,
+          },
         },
         yAxis: {
           data: "value",
@@ -72,14 +76,7 @@ export default {
             },
             color: "#a9913c",
             label: {
-              show: true,
-            //  formatter: function (param) {
-            //     console.log(param);
-            //     if(param["value"][1] === 0) return '';
-            //     else 
-            //     return parseFloat(param["value"][1]).toFixed(2);
-            //  },
-              color: "#000",
+              show: false,
             },
           },
         ],
@@ -96,12 +93,12 @@ export default {
               { name: "统一", value: 52 },
             ],
             insideLabel: {
-              show: true,
+              show: false,
             },
           },
         ],
       },
-      upDetailWeek:{
+      upDetailWeek: {
         title: {},
         xAxis: {
           data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
@@ -119,137 +116,165 @@ export default {
             },
             color: "#a9913c",
             label: {
-              show: true,
-            //  formatter: function (param) {
-            //     console.log(param);
-            //     if(param["value"][1] === 0) return '';
-            //     else 
-            //     return parseFloat(param["value"][1]).toFixed(2);
-            //  },
+              show: false,
+              //  formatter: function (param) {
+              //     console.log(param);
+              //     if(param["value"][1] === 0) return '';
+              //     else
+              //     return parseFloat(param["value"][1]).toFixed(2);
+              //  },
               color: "#000",
             },
           },
         ],
       },
-      upDetailMonth:{
-        color:['#fff'],
+      upDetailMonth: {
+        color: ["#fff"],
         title: {},
         xAxis: {
           data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-          nameTextStyle: {
-    fill: '#fff',
-    fontSize: 20
+          axisLabel: {
+            show: false,
+          },
+        },
+        yAxis: {
+          data: "value",
+        },
+        series: [
+          {
+            // data: [],
+            data: [1200, 2230, 1900, 2100, 3500, 4200, 3985],
+            type: "line",
+            linePoint: {
+              radius: 4,
+            },
+            color: "#000",
+            label: {
+              show: false,
+              //  formatter: function (param) {
+              //     console.log(param);
+              //     if(param["value"][1] === 0) return '';
+              //     else
+              //     return parseFloat(param["value"][1]).toFixed(2);
+              //  },
+              color: "#000",
+            },
+          },
+        ],
+      },
+      upDetailYear: {
+        title: {},
+        xAxis: {
+          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+        },
+        yAxis: {
+          data: "value",
+        },
+        series: [
+          {
+            // data: [],
+            data: [1200, 2230, 1900, 2100, 3500, 4200, 3985],
+            type: "line",
+            linePoint: {
+              radius: 4,
+            },
+            color: "#a9913c",
+            label: {
+              show: false,
+              //  formatter: function (param) {
+              //     console.log(param);
+              //     if(param["value"][1] === 0) return '';
+              //     else
+              //     return parseFloat(param["value"][1]).toFixed(2);
+              //  },
+              color: "#000",
+            },
+          },
+        ],
+      },
+      sortDetailWeek: {
+        color: ["#37a2da", "#FFFF00", "#e062ae", "#9400D3", "#00FF00"],
+        series: [
+          {
+            type: "pie",
+            data: [
+              { name: "可口可乐", value: 93 },
+              { name: "百事可乐", value: 32 },
+              { name: "哇哈哈", value: 65 },
+              { name: "康师傅", value: 44 },
+              { name: "统一", value: 52 },
+            ],
+            radius: ["40%", "50%"],
+            insideLabel: {
+              show: false,
+            },
+          },
+        ],
+      },
+      sortDetailMonth: {
+        color: ["#37a2da", "#FFFF00", "#e062ae", "#9400D3", "#00FF00"],
+        series: [
+          {
+            type: "pie",
+            data: [
+              { name: "可口可乐", value: 93 },
+              { name: "百事可乐", value: 32 },
+              { name: "哇哈哈", value: 65 },
+              { name: "康师傅", value: 44 },
+              { name: "统一", value: 52 },
+            ],
+            radius: ["40%", "50%"],
+            insideLabel: {
+              show: false,
+            },
+          },
+        ],
+      },
+      sortDetailYear: {
+        color: ["#37a2da", "#FFFF00", "#e062ae", "#9400D3", "#00FF00"],
+        series: [
+          {
+            type: "pie",
+            data: [
+              { name: "可口可乐", value: 93 },
+              { name: "百事可乐", value: 32 },
+              { name: "哇哈哈", value: 65 },
+              { name: "康师傅", value: 44 },
+              { name: "统一", value: 52 },
+            ],
+            radius: ["40%", "50%"],
+            insideLabel: {
+              show: false,
+            },
+          },
+        ],
+        outsideLabel:{
+          labelLineEndLength: 20
         }
-        },
-        yAxis: {
-          data: "value",
-        },
-        series: [
-          {
-            // data: [],
-            data: [1200, 2230, 1900, 2100, 3500, 4200, 3985],
-            type: "line",
-            linePoint: {
-              radius: 4,
-            },
-            color: "#a9913c",
-            label: {
-              show: true,
-            //  formatter: function (param) {
-            //     console.log(param);
-            //     if(param["value"][1] === 0) return '';
-            //     else 
-            //     return parseFloat(param["value"][1]).toFixed(2);
-            //  },
-              color: "#000",
-            },
-          },
-        ],
-      },
-      upDetailYear:{
-        title: {},
-        xAxis: {
-          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-        },
-        yAxis: {
-          data: "value",
-        },
-        series: [
-          {
-            // data: [],
-            data: [1200, 2230, 1900, 2100, 3500, 4200, 3985],
-            type: "line",
-            linePoint: {
-              radius: 4,
-            },
-            color: "#a9913c",
-            label: {
-              show: true,
-            //  formatter: function (param) {
-            //     console.log(param);
-            //     if(param["value"][1] === 0) return '';
-            //     else 
-            //     return parseFloat(param["value"][1]).toFixed(2);
-            //  },
-              color: "#000",
-            },
-          },
-        ],
-      },
-      sortDetailWeek:{
-        series: [
-          {
-            type: "pie",
-            data: [
-              { name: "可口可乐", value: 93 },
-              { name: "百事可乐", value: 32 },
-              { name: "哇哈哈", value: 65 },
-              { name: "康师傅", value: 44 },
-              { name: "统一", value: 52 },
-            ],
-            insideLabel: {
-              show: true,
-            },
-          },
-        ],
-      },
-      sortDetailMonth:{
-        series: [
-          {
-            type: "pie",
-            data: [
-              { name: "可口可乐", value: 93 },
-              { name: "百事可乐", value: 32 },
-              { name: "哇哈哈", value: 65 },
-              { name: "康师傅", value: 44 },
-              { name: "统一", value: 52 },
-            ],
-            insideLabel: {
-              show: true,
-            },
-          },
-        ],
-      },
-      sortDetailYear:{
-        series: [
-          {
-            type: "pie",
-            data: [
-              { name: "可口可乐", value: 93 },
-              { name: "百事可乐", value: 32 },
-              { name: "哇哈哈", value: 65 },
-              { name: "康师傅", value: 44 },
-              { name: "统一", value: 52 },
-            ],
-            insideLabel: {
-              show: true,
-            },
-          },
-        ],
       },
     };
   },
   methods: {
+    sortFilter(sort) {
+      let obj = sort.series[0].data;
+      obj = obj.sort(this.compare("value"));
+
+      if (obj.length > 5) {
+        for (let i = obj.length - 1; i >= 4; i--) {
+          obj[3].value += obj[i].value;
+          obj.pop();
+        }
+        obj[3]["name"] = "其它";
+      }
+      return obj;
+    },
+    compare(value) {
+      return function (a, b) {
+        var value1 = a[value];
+        var value2 = b[value];
+        return value2 - value1;
+      };
+    },
     changeTime(index) {
       this.isActive[this.timeClass[0]] = false;
       this.isActive[this.timeClass[1]] = false;
@@ -257,33 +282,38 @@ export default {
       this.isActive[this.timeClass[index]] = true;
       switch (index) {
         case 0:
-           this.upDetail = this.upDetailWeek;
-        this.sortDetail = this.sortDetailWeek;
-        this.refresh();
+          this.upDetail = this.upDetailWeek;
+          this.sortDetail = this.sortDetailWeek;
+          this.all = this.allWeek;
+          this.refresh();
           break;
         case 1:
-           this.upDetail = this.upDetailMonth;
-        this.sortDetail = this.sortDetailMonth;
-        this.refresh();
+          this.upDetail = this.upDetailMonth;
+          this.sortDetail = this.sortDetailMonth;
+          this.all = this.allMonth;
+          this.refresh();
           break;
         case 2:
-           this.upDetail = this.upDetailYear;
-        this.sortDetail = this.sortDetailYear;
+          this.upDetail = this.upDetailYear;
+          this.sortDetail = this.sortDetailYear;
+          this.all = this.allYear;
           this.refresh();
           break;
       }
+
+      console.log(this.sortDetail.series[0].data);
     },
-    refresh(){
-         this.upDetail = { ...this.upDetail };
-        this.sortDetail = { ...this.sortDetail };
+    refresh() {
+      this.upDetail = { ...this.upDetail };
+      this.sortDetail = { ...this.sortDetail };
     },
-    clear(up, sort){
+    clear(up, sort) {
       this.all = 0;
-           up.xAxis.data = [];
-     up.series[0]["data"] = [];
+      up.xAxis.data = [];
+      up.series[0]["data"] = [];
       sort.series[0]["data"] = [];
     },
-    drawYear(list,up,sort) {
+    drawYear(list, up, sort) {
       this.clear(up, sort);
       let sort_data = {};
       let date = new Date();
@@ -299,9 +329,8 @@ export default {
 
         if (this.isSameYear(list[i].bill.date, date)) {
           let month = itemDate.getMonth();
-          up.series[0]["data"][parseInt(month)] +=
-            list[i].bill.amount;
-          this.all += list[i].bill.amount;
+          up.series[0]["data"][parseInt(month)] += list[i].bill.amount;
+          this.allYear += list[i].bill.amount;
           for (let k = 0; k < list[i].tags.length; k++) {
             if (!sort_data.hasOwnProperty(list[i].tags[k].name)) {
               sort_data[list[i].tags[k].name] = list[i].bill.amount;
@@ -316,12 +345,12 @@ export default {
           name: Object.keys(sort_data)[i],
           value: sort_data[Object.keys(sort_data)[i]],
         });
-
+        sort.series[0].data = this.sortFilter(sort);
         up = { ...up };
         sort = { ...sort };
       }
     },
-    drawWeek(list,up,sort) {
+    drawWeek(list, up, sort) {
       this.clear(up, sort);
       let days = [];
       let sort_data = {};
@@ -332,9 +361,7 @@ export default {
         let dayPar = new Date(
           (dateCurPar + 86400 * (-(weekday === 0 ? 7 : weekday) + i + 1)) * 1000
         );
-        up.xAxis.data.push([
-          dayPar.getMonth() + 1 + "/" + dayPar.getDate(),
-        ]);
+        up.xAxis.data.push([dayPar.getMonth() + 1 + "/" + dayPar.getDate()]);
         up.series[0]["data"].push(0);
         days.push(
           dayPar.getFullYear() +
@@ -353,7 +380,7 @@ export default {
           for (let j = 0; j < 7; j++) {
             if (this.isSameDay(itemDate, days[j])) {
               up.series[0]["data"][j] += list[i].bill["amount"];
-              this.all += list[i].bill.amount;
+              this.allWeek += list[i].bill.amount;
               for (let k = 0; k < list[i].tags.length; k++) {
                 if (!sort_data.hasOwnProperty(list[i].tags[k].name)) {
                   sort_data[list[i].tags[k]["name"]] = list[i].bill["amount"];
@@ -371,12 +398,12 @@ export default {
           name: Object.keys(sort_data)[i],
           value: sort_data[Object.keys(sort_data)[i]],
         });
-
-       up = { ...up };
+        sort.series[0].data = this.sortFilter(sort);
+        up = { ...up };
         sort = { ...sort };
       }
     },
-    drawMonth(list,up,sort) {
+    drawMonth(list, up, sort) {
       this.clear(up, sort);
       let days = [];
       let sort_data = {};
@@ -402,9 +429,8 @@ export default {
           for (let j = 0; j < day_count; j++) {
             if (this.isSameDay(itemDate, days[j])) {
               up.series[0]["data"][j] += list[i].bill.amount;
-              this.all += list[i].bill.amount;
+              this.allMonth += list[i].bill.amount;
               for (let k = 0; k < list[i].tags.length; k++) {
-               
                 if (!sort_data.hasOwnProperty(list[i].tags[k].name)) {
                   sort_data[list[i].tags[k]["name"]] = list[i].bill["amount"];
                 } else {
@@ -421,8 +447,8 @@ export default {
           name: Object.keys(sort_data)[i],
           value: sort_data[Object.keys(sort_data)[i]],
         });
-     
       }
+      sort.series[0].data = this.sortFilter(sort);
     },
     isSameMonth(nextDate, lastDate) {
       nextDate = new Date(nextDate);
