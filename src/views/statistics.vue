@@ -48,6 +48,7 @@ export default {
           })
         }
     )
+    
   },
   methods: {
     changeCharts(index) {

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import moneyCounter from "../views/moneyCounter";
 import { ElMessage } from "element-plus/es";
-
+import analysis from '@/views/analysis'
 const routes = [
   {
     path: '/',
@@ -21,7 +21,7 @@ const routes = [
   {
     path:'/analysis',
     name: 'analysis',
-    component:() => import('../views/statistics.vue'),
+    component:analysis,
   }
 ]
 

@@ -11,9 +11,22 @@
 
 <script>
 import Gauge from '../components/Charts/gauge.vue';
-import {changeDefaultConfig} from '@jiaminghi/charts';
+import {getRes} from "../util/axiosAPI";
+
 export default {
   name: "analysis",
+  mounted(){
+    // const _this = this;
+    // getRes(
+    //     '/bill/allBills',
+    //     res => {
+    //       _this.list = res.data;
+    //       _this.$nextTick(() => {
+    //         this.$refs.templateCharts.drawWeek(this.list);
+    //       })
+    //     }
+    // )
+  },
   methods:{
     logout(){
       localStorage.clear("token");
