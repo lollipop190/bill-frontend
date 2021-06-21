@@ -300,8 +300,6 @@ export default {
           this.refresh();
           break;
       }
-
-      console.log(this.sortDetail.series[0].data);
     },
     refresh() {
       this.upDetail = { ...this.upDetail };

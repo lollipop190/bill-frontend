@@ -56,7 +56,8 @@ mounted() {
   },
   methods:{
     handleTagClick(index){
-      this.$emit('tagSelected',this.tags[index]);
+      this.$emit('tagSelected',this.tags[index], this.tagSelectedArray[index] === 0);
+      //如果后面为true，说明是没有选中，如果是false说明是取消
       this.tagSelectedArray[index] = (this.tagSelectedArray[index] === 0) ? 1: 0;
     }, 
     addNewTag(){
@@ -73,6 +74,8 @@ mounted() {
         this.tags.push(this.newTag);
         this.tagSelectedArray.push(0);
         this.tagSelectedArray[this.tagSelectedArray.length - 1] = 1;
+        this.$emit('tagSelected',this.tags[this.tags.length - 1], true);
+
       }
       this.newTag = "";
     },

@@ -1,68 +1,5 @@
 <template>
   <div>
-    <!-- <div id="tab-bar">
-      <tar-bar-item path="/list">
-        <template v-slot:item-icon>
-          <img class="tab-bar-img" src="../../assets/img/tabbar/list.svg" alt="">
-        </template>
-        <template v-slot:item-icon-active>
-          <img class="tab-bar-img" src="../../assets/img/tabbar/list_active.svg" alt="">
-        </template>
-        <template v-slot:item-text>
-          <div>明细</div>
-        </template>
-      </tar-bar-item>
-
-      <tar-bar-item path="/statistics">
-        <template v-slot:item-icon>
-          <img class="tab-bar-img" src="../../assets/img/tabbar/statistics.svg" alt="">
-        </template>
-        <template v-slot:item-icon-active>
-          <img class="tab-bar-img" src="../../assets/img/tabbar/statistics_active.svg" alt="">
-        </template>
-        <template v-slot:item-text>
-          <div>统计</div>
-        </template>
-      </tar-bar-item>
-
-      <tar-bar-item path="/" class="tab-bar-item-add">
-        <template v-slot:item-icon>
-          <img class="tab-bar-add" src="../../assets/img/tabbar/add.svg" alt="">
-        </template>
-        <template v-slot:item-icon-active>
-          <img class="tab-bar-add" src="../../assets/img/tabbar/add_active.svg" alt="">
-        </template>
-        <template v-slot:item-text>
-          <div slot="item-text">添加</div>
-        </template>
-      </tar-bar-item>
-
-
-      <tar-bar-item path="/share">
-        <template v-slot:item-icon>
-          <img class="tab-bar-img" src="../../assets/img/tabbar/share.svg" alt="">
-        </template>
-        <template v-slot:item-icon-active>
-          <img class="tab-bar-img" src="../../assets/img/tabbar/share_active.svg" alt="">
-        </template>
-        <template v-slot:item-text>
-          <div slot="item-text">共享</div>
-        </template>
-      </tar-bar-item>
-
-      <tar-bar-item path="/user">
-        <template v-slot:item-icon>
-          <img class="tab-bar-img" src="../../assets/img/tabbar/help.svg" alt="">
-        </template>
-        <template v-slot:item-icon-active>
-          <img class="tab-bar-img" src="../../assets/img/tabbar/help_active.svg" alt="">
-        </template>
-        <template v-slot:item-text>
-          <div slot="item-text">我的</div>
-        </template>
-      </tar-bar-item>
-    </div> -->
-
     <div id="tabContainer">
       <div id="tabBar">
         <div
@@ -135,7 +72,7 @@ export default {
 #tabBar {
   position: static;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr ;
 }
 #tabContainer {
   position: fixed;

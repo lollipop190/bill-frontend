@@ -87,8 +87,14 @@ export default {
       }
     },
   
-handleTagSelected(tagText){
-    this.tags.push(tagText);
+handleTagSelected(tagText,mode){
+    if(mode){
+      //true，是选定
+      this.tags.push(tagText);
+      console.log(tagText);
+    }else{
+      this.tags.splice(this.tags.indexOf(tagText), 1);
+    }
 },
     upload(){
       const _this = this;
