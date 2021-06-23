@@ -12,18 +12,12 @@
 <script>
 import infoPanel from '../components/infoPanel'
 import inputPanel from '../components/inputPanel'
-import{setColor} from "../util/backgroundColor";
 export default {
   name: 'moneyCounter',
   data(){
     return{
       title_is_null_: false
     }
-  },
-  mounted(){
-  
-    // setColor("#00fdff");
-    // setColor("#34c8ff");
   },
   components: {
     infoPanel,

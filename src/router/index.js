@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import moneyCounter from "../views/moneyCounter";
 import { ElMessage } from "element-plus/es";
-import analysis from '@/views/analysis'
+
 const routes = [
   {
     path: '/',
@@ -14,14 +14,29 @@ const routes = [
     component: () => import('../views/list')
   },
   {
+    path:'/user',
+    name: 'user',
+    component: () => import('../views/helpPage')
+  },
+  {
     path:'/login',
     name: 'login',
     component: () => import('../views/login')
   },
   {
-    path:'/analysis',
-    name: 'analysis',
-    component:analysis,
+    path: '/statistics',
+    name: 'statistics',
+    component: () => import('../views/analysis.vue'),
+  },
+  {
+    path: '/share',
+    name: 'share',
+    component: () => import('../views/share')
+  },
+  {
+    path: '/shareBills/:id',
+    name: 'shareBills',
+    component: () => import('../components/share/shareList')
   }
 ]
 
@@ -56,7 +71,6 @@ router.beforeEach(
         next();
       }
     }
-
   }
 );
 

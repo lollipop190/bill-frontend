@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import { setColor } from "../../util/backgroundColor";
 import TarBarItem from "./TarBarItem";
+import { setColor } from "../../util/backgroundColor";
 
 export default {
   name: "TabBar",
@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       drawer: false,
+      path: ["/list", "/statistics", "/","/share","/user"],
       barItem: [
         {
           name: "账单",
@@ -33,17 +34,24 @@ export default {
           class: "el-icon-notebook-2",
         },
         {
+          name: "统计",
+          img: require("../../assets/img/tabbar/statistics.svg"),
+          class: "el-icon-date",
+        },
+        {
           name: "添加",
           img: require("@/assets/img/tabbar/add.svg"),
           class: "el-icon-circle-plus-outline",
         },
         {
-          name: "统计",
-          img: require("../../assets/img/tabbar/statistics.svg"),
-          class: "el-icon-date",
+          name: "共享",
+          class: "el-icon-s-custom",
+        },
+        {
+          name: "用户",
+          class: "el-icon-user",
         },
       ],
-      path: ["/list", "/", "/analysis"],
     };
   },
   methods: {
@@ -54,13 +62,19 @@ export default {
             setColor("#FFEFD5");
             break;
           case 1:
-            setColor("#40E0D0");
+            setColor("#fffab3");
             break;
           case 2:
+            setColor("#40E0D0");
+            break;
+          case 3:
             setColor("#e3e3e3");
             break;
+          default:
+            setColor("#40E0D0");
+            break;
         }
-
+        console.log(this.path[index]);
         this.$router.push(this.path[index]);
       }
     },
@@ -72,7 +86,7 @@ export default {
 #tabBar {
   position: static;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 #tabContainer {
   position: fixed;

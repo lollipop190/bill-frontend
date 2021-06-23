@@ -108,7 +108,6 @@ export default {
         },
         series: [
           {
-            // data: [],
             data: [1200, 2230, 1900, 2100, 3500, 4200, 3985],
             type: "line",
             linePoint: {
@@ -117,12 +116,6 @@ export default {
             color: "#a9913c",
             label: {
               show: false,
-              //  formatter: function (param) {
-              //     console.log(param);
-              //     if(param["value"][1] === 0) return '';
-              //     else
-              //     return parseFloat(param["value"][1]).toFixed(2);
-              //  },
               color: "#000",
             },
           },
@@ -151,12 +144,6 @@ export default {
             color: "#000",
             label: {
               show: false,
-              //  formatter: function (param) {
-              //     console.log(param);
-              //     if(param["value"][1] === 0) return '';
-              //     else
-              //     return parseFloat(param["value"][1]).toFixed(2);
-              //  },
               color: "#000",
             },
           },
@@ -181,12 +168,6 @@ export default {
             color: "#a9913c",
             label: {
               show: false,
-              //  formatter: function (param) {
-              //     console.log(param);
-              //     if(param["value"][1] === 0) return '';
-              //     else
-              //     return parseFloat(param["value"][1]).toFixed(2);
-              //  },
               color: "#000",
             },
           },

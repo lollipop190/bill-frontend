@@ -3,10 +3,6 @@
 
  <gauge/>
 
-     <router-link to="/login" @click="logout" class="logout">
-    <el-button type="" class="logout">登出</el-button>
-    </router-link>
- 
   </div>
 
 </template>
@@ -18,9 +14,6 @@ import{setColor} from "../util/backgroundColor";
 export default {
   name: "analysis",
   methods:{
-    logout(){
-      localStorage.clear("token");
-    }
   },
   components:{
     Gauge

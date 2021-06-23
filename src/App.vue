@@ -1,6 +1,10 @@
 <template>
-  <router-view/>
-  <tab-bar/>
+  <div>
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
+    <tab-bar v-if="$route.path!=='/login'"></tab-bar>
+  </div>
 </template>
 
 <style>
@@ -11,32 +15,21 @@
   color: #2c3e50;
 
   max-width: 600px;
-  margin: auto;
-  margin-bottom: 80px;
+  margin: 3% auto auto;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
 <script>
 import MoneyCounter from "./views/moneyCounter";
-import TabBar from '@/components/tabbar/TabBar'
+import TabBar from "./components/tabbar/TabBar";
+import TarBarItem from "./components/tabbar/TarBarItem";
 
 export default {
-  components: {
-    MoneyCounter,
-    TabBar
-  
-  }
+  components: {TarBarItem, TabBar, MoneyCounter}
 }
 </script>
+<style>
+body{
+  margin-bottom: 80px;
+}
+</style>
