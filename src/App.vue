@@ -31,5 +31,6 @@ export default {
 <style>
 body{
   margin-bottom: 80px;
+  margin-top: 40px;
 }
 </style>
