@@ -189,12 +189,12 @@ export default {
 }
 
 .my-divider {
-  background-color: #fff585;
+  background-color: #dffaf6;
   height: 9px;
   width: auto;
   box-shadow: 0 -3px 2px rgba(200, 200, 200, 0.2);
   /*border: 2px solid #fff544;*/
-  border: 2px solid #fff585;
+  border: 2px solid #dffaf6;
   border-radius: 10px;
   margin: 20px 2%;
 }
