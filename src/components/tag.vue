@@ -1,68 +1,68 @@
 <template>
   <div>
-  <div class="tagContainerCon">
-    <div class="tagContainer">
-      <div v-for="(tag, index) in tags" class="tag" :class="{tagSelected: tagSelectedArray[index] === 1 , tagNotSelected: tagSelectedArray[index] === 0}" @click="handleTagClick(index)">{{tag}}</div>
+    <div class="tagContainerCon">
+      <div class="tagContainer">
+        <div
+          v-for="(tag, index) in tags"
+          class="tag"
+          :class="{
+            tagSelected: tagSelectedArray[index] === 1,
+            tagNotSelected: tagSelectedArray[index] === 0,
+          }"
+          @click="handleTagClick(index)"
+        >
+          {{ tag }}
+        </div>
+      </div>
     </div>
-    </div>
- <div class="input_container" v-if="isAdd">
-      <input class="newtag" type="text" placeholder="添加标签" v-model="newTag">
-
-        <i class="el-icon-check" style="font-size: 20px;" @click="addNewTag"></i>
-
-
-    </div>
+      <new-tag @add-tag="addNewTag"  v-if="isAdd"></new-tag>
+    
   </div>
 </template>
 
 <script>
-import {getRes, postRes} from "../util/axiosAPI";
+import { getRes, postRes } from "../util/axiosAPI";
+import DateSelector from "./dateSelector.vue";
+import NewTag from './newTag.vue';
 export default {
-name: 'tag',
-mounted() {
+  name: "tag",
+  mounted() {
     //标签数据
     let _this = this;
     for (let i = 0; i < this.tags.length; i++) {
-        _this.tagSelectedArray.push(0);
+      _this.tagSelectedArray.push(0);
     }
 
-    getRes(
-        '/tag/allTags',
-        res =>{
-          let tags = res.data;
-          console.log();
-          for (let i = 0; i < tags.length; i++) {
-            if (!_this.tags.includes(tags[i]['name'])){
-              _this.tags.push(tags[i]['name']);
-              _this.tagSelectedArray.push(0);
-            }
-          }
-
+    getRes("/tag/allTags", (res) => {
+      let tags = res.data;
+      for (let i = 0; i < tags.length; i++) {
+        if (!_this.tags.includes(tags[i]["name"])) {
+          _this.tags.push(tags[i]["name"]);
+          _this.tagSelectedArray.push(0);
         }
-    )
-    
+      }
+    });
   },
-  emits:['tagSelected'],
+  emits: ["tagSelected"],
   data() {
     return {
-    tags:[
-          '餐饮',
-          '交通',
-          '学习','医疗'
-      ],
-    tagSelectedArray:[],
-    newTag:'',
-    }
+      tags: ["餐饮", "交通", "学习", "医疗"],
+      tagSelectedArray: [],
+      
+    };
   },
-  methods:{
-    handleTagClick(index){
-      this.$emit('tagSelected',this.tags[index], this.tagSelectedArray[index] === 0);
+  methods: {
+    handleTagClick(index) {
+      this.$emit(
+        "tagSelected",
+        this.tags[index],
+        this.tagSelectedArray[index] === 0
+      );
       //如果后面为true，说明是没有选中，如果是false说明是取消
-      this.tagSelectedArray[index] = (this.tagSelectedArray[index] === 0) ? 1: 0;
-    }, 
-    addNewTag(){
-      if(this.newTag === "") return;
-      if (this.tags.includes(this.newTag)){
+      this.tagSelectedArray[index] = this.tagSelectedArray[index] === 0 ? 1 : 0;
+    },
+    addNewTag(newTag) {
+      if (this.tags.includes(newTag)) {
         ElMessage.warning({
           message: "标签已存在",
           type: "warning",
@@ -70,63 +70,64 @@ mounted() {
           center: true,
           offset: 10,
         });
-      }else {
-        this.tags.push(this.newTag);
+      } else {
+        this.tags.push(newTag);
         this.tagSelectedArray.push(0);
         this.tagSelectedArray[this.tagSelectedArray.length - 1] = 1;
-        this.$emit('tagSelected',this.tags[this.tags.length - 1], true);
-
+        this.$emit("tagSelected", this.tags[this.tags.length - 1], true);
       }
-      this.newTag = "";
+    
     },
   },
-  computed:{
-      isAdd(){
-          return this.$route.path === '/';
-      }
+  computed: {
+    isAdd() {
+      return this.$route.path === "/";
+    },
   },
   components: {
- 
-  }
-}
+    DateSelector,
+    NewTag,
+  },
+};
 </script>
 
 <style scoped>
-.input_container{
-  margin-top: 10px;
-}
-input{
+input {
   border: 2px solid white;
   border-radius: 10px;
   font-size: 20px;
 }
-.tagContainerCon{
+.tagContainerCon {
   margin-top: 10px;
   text-align: center;
 }
-.tagSelected{
+.tagSelected {
   font-weight: bold;
   color: black;
-  border: 2px  black solid;
+  border: 2px black solid;
 }
-.tagNotSelected{
-  border: 2px  gray solid;
+.tagNotSelected {
+  border: 2px gray solid;
   color: gray;
 }
-.tagContainer{
+.tagContainer {
   margin: auto;
   width: 85%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
-.tag{
+.tag {
   border-radius: 10px;
   margin: 2px;
   overflow: hidden;
 }
-.newtag{
+.newtag {
   font-size: 15px;
-  width: 20%;
-
+  width: 80%;
+}
+</style>
+<style>
+.el-popover.el-popper {
+  border-radius: 10%;
 }
 </style>
