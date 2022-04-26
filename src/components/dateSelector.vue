@@ -17,12 +17,14 @@
           placeholder="日期"
           v-model="date"
           style="width: 90%; margin: auto"
+          @focus="clickFunc"
         ></el-date-picker>
         <el-time-picker
           class="dateItem"
           placeholder="时间"
           v-model="time"
           style="width: 90%; margin: auto"
+          @focus="clickFunc"
         ></el-time-picker>
       </div>
     </el-popover>
@@ -38,6 +40,11 @@ export default {
       date: "",
       time: "",
     };
+  },
+  methods:{
+    clickFunc(){
+      document.activeElement.blur();
+    }
   },
   components: {},
   watch:{

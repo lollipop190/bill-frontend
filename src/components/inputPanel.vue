@@ -13,6 +13,7 @@
         style="display: inline-block"
         @set-date="setDate"
         @set-time="setTime"
+        
       ></date-selector>
     </div>
 
