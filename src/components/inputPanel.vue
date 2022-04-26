@@ -32,7 +32,7 @@
       style="margin-top: 10px; margin-left: 10px; margin-right: 10px"
       type="success"
       round
-      :disabled="title_is_null"
+      :disabled="title_is_null || uploading"
       @click="upload"
       >提交</el-button
     >
@@ -54,6 +54,7 @@ export default {
       tags: [],
       date: "",
       time: "",
+      uploading: false,
     };
   },
   methods: {
@@ -120,7 +121,7 @@ export default {
     },
     upload() {
       const _this = this;
-
+      this.uploading = true;
       postRes(
         "/bill/newBill",
         {
@@ -149,8 +150,19 @@ export default {
       this.time = newTime;
     },
     generateTime() {
-      let dateArr = this.date.toString().split(" ");
-      let timeArr = this.time.toString().split(" ");
+      let dateArr;
+      let timeArr;
+      if(this.date !== ""){
+        dateArr = this.date.toString().split(" ");
+      }else {
+        dateArr = new Date().toString().split(" ");
+      }
+      
+      if(this.time !== ""){
+        timeArr = this.time.toString().split(" ");
+      }else {
+        timeArr = new Date().toString().split(" ");
+      }
       dateArr[4] = timeArr[4];
       let realDate = dateArr.join(" ");
       return new Date(realDate);
