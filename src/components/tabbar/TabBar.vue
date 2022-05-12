@@ -50,20 +50,20 @@ export default {
     handleClick(index) {
       if (this.$route.path !== this.path[index]) {
         let hour = new Date().getHours();
-        if(hour >= 22 || hour <=6){
+        if (hour >= 22 || hour <= 6) {
           setColor("#8B8B7A");
-          return;
-        }
-        switch (index) {
-          case 0:
-            setColor("#FFEFD5");
-            break;
-          case 1:
-            setColor("#40E0D0");
-            break;
-          case 2:
-            setColor("#e3e3e3");
-            break;
+        } else {
+          switch (index) {
+            case 0:
+              setColor("#FFEFD5");
+              break;
+            case 1:
+              setColor("#40E0D0");
+              break;
+            case 2:
+              setColor("#e3e3e3");
+              break;
+          }
         }
 
         this.$router.push(this.path[index]);
@@ -77,7 +77,7 @@ export default {
 #tabBar {
   position: static;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 #tabContainer {
   position: fixed;

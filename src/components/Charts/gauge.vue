@@ -53,28 +53,19 @@ import { computed, onMounted, ref } from "vue";
 import { VueEcharts } from "vue3-echarts";
 import { ElMessage } from "element-plus";
 onMounted(() => {
-  ElMessage.info("正在获取数据...");
+  
   getResNew("/bill/week")
     .then((res) => {
       allData.value["week"] = res;
-      ElMessage.success("周数据获取成功！");
       changeTime(0);
     })
     .then(() => {
       getResNew("/bill/month").then((res) => {
       allData.value["month"] = res;
-      ElMessage.success("月数据获取成功！");
       });
     }).then( () =>{
-      let prompt = ElMessage.info({
-          message: "年数据获取中...",
-          duration: 0,
-          showClose: true
-        })
       getResNew("/bill/year").then ((res) => {
-        
         allData.value["year"] = res;
-        prompt.close();
         ElMessage.success("年数据获取成功！");
       })
     })
