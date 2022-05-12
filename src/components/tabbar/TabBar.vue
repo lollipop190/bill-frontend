@@ -49,6 +49,11 @@ export default {
   methods: {
     handleClick(index) {
       if (this.$route.path !== this.path[index]) {
+        let hour = new Date().getHours();
+        if(hour >= 22 || hour <=6){
+          setColor("#8B8B7A");
+          return;
+        }
         switch (index) {
           case 0:
             setColor("#FFEFD5");

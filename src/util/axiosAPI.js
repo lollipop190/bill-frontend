@@ -19,6 +19,19 @@ export function postRes(url, data, success) {
 
 }
 
+export function postResNew(url, data) {
+    return axios.post(
+        url,
+        data, {
+            headers: {
+                "token": localStorage.getItem('Authorization')
+            }
+        }
+    ).catch(err => {
+        console.log(err);
+    })
+
+}
 
 export function getRes(url, success){
     axios.get(url, {
@@ -34,3 +47,14 @@ export function getRes(url, success){
 
 
 
+export function getResNew(url) {
+    return axios.get(url, {
+        headers: {
+            "token": localStorage.getItem('Authorization')
+        }
+    }).then(
+        res => res.data
+    ).catch(
+        err => console.log(err)
+    )
+}

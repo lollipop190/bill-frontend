@@ -1,5 +1,10 @@
 <template>
-  <router-view/>
+    <router-view v-slot="{ Component }" :key="key">
+    <keep-alive>
+    <component :is="Component" />
+    </keep-alive>
+  <!-- </transition> -->
+</router-view>
   <tab-bar/>
 </template>
 
@@ -30,13 +35,16 @@
 </style>
 <script>
 import MoneyCounter from "./views/moneyCounter";
-import TabBar from '@/components/tabbar/TabBar'
-
+import TabBar from '@/components/tabbar/TabBar';
+import { getRes } from "../src/util/axiosAPI";
 export default {
   components: {
     MoneyCounter,
     TabBar
   
+  },
+  methods:{
+
   }
 }
 </script>

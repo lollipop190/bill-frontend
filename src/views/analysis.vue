@@ -4,7 +4,7 @@
  <gauge/>
 
      <router-link to="/login" @click="logout" class="logout">
-    <el-button type="" class="logout">登出</el-button>
+    <el-button  class="logout">登出</el-button>
     </router-link>
  
   </div>

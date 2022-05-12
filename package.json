@@ -9,15 +9,16 @@
   "dependencies": {
     "@jiaminghi/data-view": "^2.10.0",
     "axios": "^0.21.1",
-    "echarts": "^5.1.2",
+    "echarts": "^5.3.2",
     "element-plus": "^1.0.2-beta.34",
     "jquery": "^3.6.0",
     "register-service-worker": "^1.7.1",
     "uview-ui": "^1.8.3",
     "vue": "^3.0.11",
-    "vue-echarts": "*",
+    "vue-echarts": "^6.0.3",
     "vue-particles": "^1.0.9",
     "vue-router": "^4.0.0-0",
+    "vue3-echarts": "^1.0.4",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
