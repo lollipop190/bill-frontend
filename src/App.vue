@@ -1,4 +1,5 @@
 <template>
+ 
     <router-view v-slot="{ Component }" :key="key">
     <keep-alive>
     <component :is="Component" />

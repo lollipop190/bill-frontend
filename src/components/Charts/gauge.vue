@@ -188,7 +188,6 @@ function changeTime(index) {
   isActive.value[timeClass[1]] = 1 === index;
   dateAndAmount.value.xAxis.data = allData.value[timeClass[index]].date;
   dateAndAmount.value.series[0].data = allData.value[timeClass[index]].amount;
-  console.log(dateAndAmount.value)
   let tag = allData.value[timeClass[index]].tag;
   let percent = allData.value[timeClass[index]].percent;
   let tagAndPercentArr = [];

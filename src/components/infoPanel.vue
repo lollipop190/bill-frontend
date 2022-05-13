@@ -70,16 +70,18 @@ export default {
   text-align: center;
   border: 2px solid white;
   border-radius: 10px;
+  margin: 5px 8px 5px 8px;
+  padding:8px;
   font-family: "Academy Engraved LET",monospace;
 }
 .container div{
     text-align: center;
 }
 .title{
-  margin: 4px 4px 4px 4px;
-  font-size: 20px;
+  margin: 2px 2px 2px 2px;
+  font-size: 18px;
 }
 .moneyHolder{
-  font-size: 30px;
+  font-size: 25px;
 }
 </style>

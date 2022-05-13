@@ -22,7 +22,8 @@
 
 <script>
 import { getRes, postRes } from "../util/axiosAPI";
-import DateSelector from "./dateSelector.vue";
+
+
 import NewTag from './newTag.vue';
 export default {
   name: "tag",
@@ -85,7 +86,6 @@ export default {
     },
   },
   components: {
-    DateSelector,
     NewTag,
   },
 };

@@ -115,7 +115,6 @@ export default {
       res=>{
         _this.queryMode = true;
         _this.list = res.data;
-        console.log(_this.list);
       }
     )
     

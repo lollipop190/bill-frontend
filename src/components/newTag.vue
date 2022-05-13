@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-popover
+    <n-popover
       placement="bottom"
       :width="50"
       trigger="click"
       :show-arrow="false"
     >
-      <template #reference>
+      <template #trigger>
         <i style="font-size:30px; margin-top:5px" class="el-icon-collection"></i>
       </template>
       <div>
@@ -19,7 +19,7 @@
 
         <i class="el-icon-check" style="font-size: 20px" @click="addNewTag"></i>
       </div>
-    </el-popover>
+    </n-popover>
   </div>
 </template>
 

@@ -151,27 +151,28 @@ export default {
       this.time = newTime;
     },
     generateTime() {
-      let dateArr;
-      let timeArr;
-      if(this.date !== ""){
-        dateArr = this.date.toString().split(" ");
-      }else {
-        dateArr = new Date().toString().split(" ");
-      }
+      // let dateArr;
+      // let timeArr;
+      // if(this.date !== ""){
+      //   dateArr = this.date.toString().split(" ");
+      // }else {
+      //   dateArr = new Date().toString().split(" ");
+      // }
       
-      if(this.time !== ""){
-        timeArr = this.time.toString().split(" ");
-      }else {
-        timeArr = new Date().toString().split(" ");
-      }
-      dateArr[4] = timeArr[4];
-      let realDate = dateArr.join(" ");
-      return new Date(realDate);
+      // if(this.time !== ""){
+      //   timeArr = this.time.toString().split(" ");
+      // }else {
+      //   timeArr = new Date().toString().split(" ");
+      // }
+      // dateArr[4] = timeArr[4];
+      // let realDate = dateArr.join(" ");
+      let d = new Date(this.date + ' ' + this.time); 
+      return d;
     },
   },
   computed: {
     title_is_null() {
-      return this.title === "" || this.items[0] === "0";
+      return this.title === "";
     },
   },
   components: {
@@ -212,7 +213,7 @@ input {
   border: 2px solid black;
   margin: 1px 1px 1px 1px;
   border-radius: 15px;
-  font-size: 40px;
+  font-size: 30px;
   font-family: "Space Mono", monospace;
   overflow: auto;
 }
